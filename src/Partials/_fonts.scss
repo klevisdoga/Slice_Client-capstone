@@ -1,0 +1,62 @@
+@use './variables' as *;
+@use './mixins' as *;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap');
+
+// Page Header
+h1 {
+    // Mobile
+    font-family: "Inter", sans-serif;
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+    font-weight: 600; // Demi
+  
+    @include tablet {
+      font-size: 2rem;
+      line-height: 2.5rem;
+    }
+  }
+  
+  // Subheader
+  h2 {
+
+    // Mobile
+    font-family: "Inter", sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600; // Demi
+  
+    @include tablet {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+  
+  // Labels, Links, Buttons
+  h3 {
+
+    // Mobile
+    font-family: "Inter", sans-serif;
+    font-size: 0.813rem;
+    line-height: 1.25rem;
+    font-weight: 600; // Demi
+  
+    @include tablet {
+      font-size: 0.875rem;
+      line-height: 1.375rem;
+    }
+  }
+  
+  // Table Header
+  h4 {
+    
+    // Mobile
+    font-family: "Inter", sans-serif;
+    font-size: 0.688rem;
+    line-height: 1rem;
+    font-weight: 600; // Demi
+  
+    @include tablet {
+      font-size: 0.75rem;
+      line-height: 1.125rem;
+    }
+}

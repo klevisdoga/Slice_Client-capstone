@@ -1,0 +1,100 @@
+@use '../../Partials/mixins' as *;
+@use '../../Partials/variables' as *;
+
+.footer{
+
+    padding-bottom: 1rem;
+
+    &__socials{
+        display: flex;
+        align-items: center;
+        background-color: $secondary-dark;
+        padding: .5rem 1rem;
+
+        & a {
+            margin-left: 1rem;
+
+            &:first-child{
+                margin: 0;
+            }
+        }
+
+        &-image{
+            width: 25px;
+            margin-left: 1rem;
+
+            &:first-child{
+                margin-left: 0;
+            }
+
+            &--facebook{
+                width: 33px;
+                padding-bottom: 0;
+            }
+            &--twitter{
+                @extend .footer__socials-image--facebook;
+            }
+        }
+
+        &-colab{
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            border-left: 1px solid $primary-dark;
+            padding-left: 1rem;
+            margin-left: .5rem;
+
+            & a {
+                margin: 0;
+            }
+            
+            &--stash{
+                text-decoration: none;
+                color: $primary-dark;
+
+
+            }
+            &--x{
+                padding: 0 .5rem;
+                font-size: .5rem;
+            }
+            &--plaid{
+                width: 2.5rem;
+                padding-top: .25rem;
+            }
+        }
+    }
+
+    &__nav{
+        display: flex;
+        justify-content: space-between;
+        padding: 0 1rem;
+        padding-bottom: 2rem;
+
+        &-info{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 30%;
+
+            &--title {
+                margin-bottom: .25rem;
+                align-self: flex-start;
+            }
+
+            & a {
+                text-decoration: none;
+                color: $primary-dark;
+                font-size: .5rem;
+                align-self: flex-start;
+            }
+
+        }
+    }
+
+    &__copyright{
+        font-size: .35rem;
+        margin: 0;
+        text-align: center;
+    }
+}

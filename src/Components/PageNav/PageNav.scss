@@ -6,13 +6,16 @@
     flex-direction: column;
     align-items: center;
 
+    & a{
+        text-decoration: none;
+        color: $primary-dark;
+    }
+
     &__burger-nav{
         width: 1.25rem;
     }
 
     &__nav{
-        -webkit-transition: all .5s ease-out;
-        // transform: translate(20px);
         display: flex;
         flex-direction: column;
         width: 100%;

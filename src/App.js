@@ -3,6 +3,7 @@ import {useState} from 'react'
 import './App.scss';
 import PageNav from './Components/PageNav/PageNav';
 import HomePage from './Pages/HomePage/HomePage';
+import PageFooter from './Components/PageFooter/PageFooter';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState('false')
@@ -15,6 +16,7 @@ function App() {
       <Switch>
         <Route path='/' exact component={HomePage}/>
       </Switch>
+      <PageFooter />
       </BrowserRouter>
     </div>
   );

@@ -3,13 +3,22 @@
 
 .homepage{
     &__info{
-        padding: 3rem 1rem;
+        padding: 4rem 1rem;
+        padding-bottom: 3.5rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-
         background-color: $primary-neutral;
-        height: 100vh;
+        height: 40rem;
+
+        @include tablet{
+            padding: 6rem 2rem;
+            height: 55rem;
+        }
+        @include desktop{
+            height: 67.4rem;
+            padding: 8rem 2rem;
+        }
 
         & p{
             color: $para-light;
@@ -17,6 +26,8 @@
         }
 
         &__text{
+            max-width: 25rem;
+            margin: 0 auto;
 
             &-title{
                 text-align: center;

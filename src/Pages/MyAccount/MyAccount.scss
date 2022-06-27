@@ -1,0 +1,184 @@
+@use "../../Partials/mixins" as *;
+@use "../../Partials/variables" as *;
+
+.account {
+    &__title {
+        margin: 0;
+        &-container {
+            background-color: $secondary-dark;
+            height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+
+            @include tablet {
+                padding: 1rem 2rem;
+                height: fit-content;
+            }
+            @include desktop{
+                padding: 1rem 4rem;
+            }
+        }
+    }
+
+    &__signout {
+        color: $para-light;
+
+        &:hover{
+            cursor: pointer;
+        }
+
+        @include tablet {
+            padding: 0;
+            margin: 0;
+            font-size: 0.75rem;
+        }
+    }
+
+    &__main {
+        padding: 3rem 1rem;
+
+        @include tablet {
+            padding: 4rem 2rem;
+            padding-bottom: 2rem;
+        }
+        @include desktop{
+            padding: 4rem 4rem;
+            padding-bottom: 2rem;
+        }
+    }
+
+    &__upcoming {
+        &-title {
+            font-size: 1.75rem;
+
+            @include tablet {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+        }
+
+        &-list {
+            display: flex;
+            flex-wrap: wrap;
+            width: 80%;
+            max-width: 40rem;
+            margin: 0 auto;
+            margin-bottom: 2rem;
+
+            @include tablet {
+                margin-bottom: 4rem;
+            }
+
+            &item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 33%;
+                margin: 1rem 0;
+
+                &-title {
+                    margin: 0;
+                    font-size: 1.25rem;
+
+                    @include tablet {
+                        font-size: 1.5rem;
+                    }
+                }
+                &-date {
+                    font-size: 0.75rem;
+                }
+            }
+        }
+    }
+
+    &__all {
+        &-title {
+            @extend .account__upcoming-title;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        &-list {
+            @extend .account__upcoming-list;
+            &item {
+                @extend .account__upcoming-listitem;
+                &-title {
+                    @extend .account__upcoming-listitem-title;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+
+    &__settings {
+        &-profile {
+            padding-top: 2rem;
+
+            @include tablet{
+                display: flex;
+                align-items: flex-start;
+                border-top: 1px solid $primary-dark;
+                padding-bottom: 2rem
+            }
+            &-title {
+                @extend .account__upcoming-listitem-title;
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+
+                @include tablet{
+                    width: 8rem;
+                    margin-right: 2rem;
+                }
+            }
+
+            &-info {
+                display: flex;
+                align-items: flex-start;
+                padding-left: 2rem;
+
+                &-container {
+                    width: 50%;
+
+                    @include tablet{
+                        width: 15rem;
+                    }
+                }
+
+                &-title {
+                    margin-bottom: 0;
+
+                    @include tablet{
+                        margin: 0;
+                    }
+                }
+                &-span {
+                    margin: 0.25rem 0;
+                    font-weight: 400;
+
+                    @include tablet{
+                        font-size: .75rem;
+                    }
+                }
+                &-edit {
+                    font-size: 0.688rem;
+                    color: $edit_remove;
+
+                    &--divider {
+                        color: black;
+                        font-weight: 200;
+                    }
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}

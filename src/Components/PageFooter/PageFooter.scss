@@ -1,100 +1,145 @@
-@use '../../Partials/mixins' as *;
-@use '../../Partials/variables' as *;
+@use "../../Partials/mixins" as *;
+@use "../../Partials/variables" as *;
 
-.footer{
-
+.footer {
     padding-bottom: 1rem;
 
-    &__socials{
+    &__socials {
         display: flex;
         align-items: center;
-        background-color: $secondary-dark;
-        padding: .5rem 1rem;
-
+        justify-content: center;
+        padding: 0.75rem 1rem 0.5rem 1rem;
+        
+        @include tablet{
+            padding: 1.25rem 2rem 1rem 2rem;
+        }
+        
         & a {
             margin-left: 1rem;
-
-            &:first-child{
+            
+            &:first-child {
                 margin: 0;
             }
         }
+        
+        &--background{
+            background-color: $secondary-dark;
+        }
 
-        &-image{
+        &-container {
+            display: flex;
+            align-items: center;
+        }
+
+        &-image {
             width: 25px;
             margin-left: 1rem;
 
-            &:first-child{
+            @include tablet{
+                width: 50px;
+            }
+
+            &:first-child {
                 margin-left: 0;
             }
 
-            &--facebook{
+            &--facebook {
                 width: 33px;
                 padding-bottom: 0;
+
+                @include tablet{
+                    width: 66px
+                }
             }
-            &--twitter{
+            &--twitter {
                 @extend .footer__socials-image--facebook;
             }
         }
 
-        &-colab{
+        &-colab {
             display: flex;
             justify-content: space-evenly;
             align-items: center;
             border-left: 1px solid $primary-dark;
             padding-left: 1rem;
-            margin-left: .5rem;
+            margin-left: 2rem;
+
+            @include tablet{
+                padding-left: 2rem;
+                height: 4rem;
+            }
 
             & a {
                 margin: 0;
             }
-            
-            &--stash{
+
+            &--slice,
+            .footer__socials-colab--plaid-link {
                 text-decoration: none;
                 color: $primary-dark;
-
-
+                @include tablet{
+                    font-size: 1.75rem;
+                }
             }
-            &--x{
-                padding: 0 .5rem;
-                font-size: .5rem;
-            }
-            &--plaid{
-                width: 2.5rem;
-                padding-top: .25rem;
+
+            &--x {
+                padding: 0 0.5rem;
+                font-size: 0.5rem;
+
+                @include tablet{
+                    font-size: 1rem;
+                }
             }
         }
     }
 
-    &__nav{
+    &__nav {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         padding: 0 1rem;
         padding-bottom: 2rem;
 
-        &-info{
+        @include tablet{
+            padding: 1rem 2rem;
+        }
+
+        &-info {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 30%;
 
+            @include tablet{
+                width: 34%;
+            }
+
             &--title {
-                margin-bottom: .25rem;
-                align-self: flex-start;
+                margin-bottom: 0.25rem;
+
+                @include tablet{
+                    margin-bottom: .5rem;
+                }
             }
 
             & a {
                 text-decoration: none;
                 color: $primary-dark;
-                font-size: .5rem;
-                align-self: flex-start;
-            }
+                font-size: 0.5rem;
 
+                @include tablet{
+                    font-size: .75rem;
+                }
+            }
         }
     }
 
-    &__copyright{
-        font-size: .35rem;
-        margin: 0;
+    &__copyright {
+        font-size: 0.35rem;
+        margin: 0 auto;
         text-align: center;
+
+        @include tablet{
+            font-size: .5rem;
+        }
     }
 }

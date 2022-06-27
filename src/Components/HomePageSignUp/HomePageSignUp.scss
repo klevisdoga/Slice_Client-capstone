@@ -1,19 +1,25 @@
-@use '../../Partials/mixins' as *;
-@use '../../Partials/variables' as *;
+@use "../../Partials/mixins" as *;
+@use "../../Partials/variables" as *;
 
-.homepage{
-
-    &__signup{
+.homepage {
+    &__signup {
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 3rem 1rem;
 
-        &__text{
+        @include tablet {
+            padding: 6rem 2rem;
+        }
+        @include desktop{
+            padding: 8rem 2rem;
+        }
+
+        &__text {
             display: flex;
             flex-direction: column;
 
-            &-title{
+            &-title {
                 text-align: center;
                 margin: 0;
             }
@@ -21,16 +27,37 @@
             & p {
                 color: $para-light;
                 font-weight: 600;
-                margin-top: .5rem;
+                margin-top: 0.5rem;
             }
         }
 
-        &-button{
+        &-button {
             text-decoration: none;
             background-color: $primary-dark;
             color: $primary-light;
-            padding: .25rem 1.5rem;
+            padding: 0.25rem 1.5rem;
             border-radius: 24px;
+
+            @include tablet {
+                margin-top: 1rem;
+                padding: .5rem 1.5rem;
+            }
+
+            &--account {
+                text-decoration: none;
+                background-color: $primary-dark;
+                color: $primary-light;
+                padding: 0.5rem 1.5rem;
+                border-radius: 24px;
+                margin-top: 1rem;
+
+                @include tablet {
+                    margin-top: 1rem;
+                }
+                @include desktop{
+                    margin-top: 2rem;
+                }
+            }
         }
     }
 }

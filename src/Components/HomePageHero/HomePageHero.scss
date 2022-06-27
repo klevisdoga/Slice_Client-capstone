@@ -1,59 +1,100 @@
-@use '../../Partials/mixins' as *;
-@use '../../Partials/variables' as *;
+@use "../../Partials/mixins" as *;
+@use "../../Partials/variables" as *;
 
-.homepage{
-    margin-top: 1rem;
+.homepage {
+    @include tablet {
+        margin: 0 2rem;
+    }
+    @include desktop{
+        margin: 0 4rem;
+    }
 
-    &__hero{
-        background: $primary-dark url(../../Assets/Images/stash_eg_img.png) no-repeat center 7.75rem;
+    &__hero {
+        background: $primary-dark url(../../Assets/Images/stash_eg_img.png) no-repeat 7.75rem;
+        background-position: 50% 45%;
         background-size: 37.75rem;
-        height: 42.5rem;
+        height: 40rem;
         width: 100%;
         padding: 1rem;
-        padding-top: 6rem;
         position: relative;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
 
-        &-title{
+        @include tablet {
+            height: 65rem;
+            background-size: 62.5rem;
+            padding: 2rem;
+            background-position: 50% 50%;
+        }
+        @include desktop{
+            height: 85rem;
+            background-position: 50% 60%;
+            background-size: 80rem;
+            padding-bottom: 4rem;
+        }
+
+        &-title {
             color: $primary-light;
             font-size: 5.4rem;
             font-weight: 400;
-            margin: 0;
+            margin-top: 2.75rem;
             text-align: center;
+
+            @include tablet {
+                font-size: 10rem;
+                padding: 0;
+            }
+            @include desktop{
+                font-size: 20rem;
+            }
+
+            &-container {
+                height: fit-content;
+            }
         }
 
-        &-slice{
-            height: .65rem;
-            width: 100%;
-            background-color: $primary-light;
-            position: absolute;
-            top: 7rem;
-            left: 0;
-        }
+        &-slice {
+            position: relative;
+            left: 100%;
 
-        &-image{
-            overflow: hidden;
-            width: 100%;
+            &--anim {
+                height: 2px;
+                width: 100%;
+                background-color: $primary-light;
+                position: absolute;
+                top: 7rem;
+                left: 0;
+                transition: left 0.5s ease-in-out;
+
+                @include tablet {
+                    height: 4px;
+                    top: 10.75rem;
+                }
+                @include desktop{
+                    height: 6px;
+                    top: 16.7rem;
+                }
+            }
         }
 
         &__text {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding-bottom: 3rem;
+            margin: 0 auto;
+            padding-bottom: 2.5rem;
+            max-width: 25rem;
+            text-align: center;
 
-            &-title{
-                color: $primary-light;
-                margin: 0;
-                font-size: 2.3rem;
-                text-align: center;
+            @include tablet {
+                max-width: 100%;
+                padding-bottom: 4rem;
             }
-            // &-paragraph{
-            //     color: $para-dark;
-            //     text-align: center;
-            // }
+
+            &-title {
+                color: $primary-light;
+            }
         }
     }
 }

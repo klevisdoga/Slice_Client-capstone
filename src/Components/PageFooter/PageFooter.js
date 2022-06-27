@@ -10,16 +10,19 @@ import { Link, NavLink } from 'react-router-dom';
 export default function PageFooter() {
     return (
         <footer className='footer'>
-            <div className='footer__socials'>
-                <a href='https://www.instagram.com/klevisdoga'><img src={instagram} alt='instagram icon' className='footer__socials-image' /></a>
-                <a href='https://www.facebook.com'><img src={facebook} alt='facebook icon' className='footer__socials-image footer__socials-image--facebook' /></a>
-                <a href='https://www.github.com/klevisdoga'><img src={github} alt='github icon' className='footer__socials-image' /></a>
-                <a href='https://www.twitter.com'><img src={twitter} alt='twitter icon' className='footer__socials-image footer__socials-image--twitter' /></a>
-                <div className='footer__socials-colab'>
-                    <Link to={'/'} className='footer__socials-colab--stash'>STASH</Link>
-                    <span className='footer__socials-colab--x'>X</span>
-                    <a href='https://www.plaid.com' className='footer__socials-colab--plaid-link' ><img className='footer__socials-colab--plaid' src={plaid} alt='plaid API logo' /></a>
-
+            <div className='footer__socials--background'>
+                <div className='footer__socials'>
+                    <div className='footer__socials-container'>
+                        <a href='https://www.instagram.com/klevisdoga'><img src={instagram} alt='instagram icon' className='footer__socials-image' /></a>
+                        <a href='https://www.facebook.com'><img src={facebook} alt='facebook icon' className='footer__socials-image footer__socials-image--facebook' /></a>
+                        <a href='https://www.github.com/klevisdoga'><img src={github} alt='github icon' className='footer__socials-image' /></a>
+                        <a href='https://www.twitter.com'><img src={twitter} alt='twitter icon' className='footer__socials-image footer__socials-image--twitter' /></a>
+                    </div>
+                    <div className='footer__socials-colab'>
+                        <Link to={'/'} className='footer__socials-colab--slice'>SLICE</Link>
+                        <span className='footer__socials-colab--x'>X</span>
+                        <a href='https://www.plaid.com' className='footer__socials-colab--plaid-link'>PLAID</a>
+                    </div>
                 </div>
             </div>
             <div className='footer__nav'>
@@ -29,17 +32,17 @@ export default function PageFooter() {
                     <NavLink to={'/'}>Contact us</NavLink>
                 </div>
                 <div className='footer__nav-info'>
-                    <h4 className='footer__nav-info--title footer__nav-info--title-about'>ABOUT STASH</h4>
+                    <h4 className='footer__nav-info--title footer__nav-info--title-more'>MORE</h4>
+                    <NavLink to={'/'}>Slice App</NavLink>
+                    <NavLink to={'/'}>Gift Vouchers</NavLink>
+                </div>
+                <div className='footer__nav-info'>
+                    <h4 className='footer__nav-info--title footer__nav-info--title-about'>ABOUT SLICE</h4>
                     <NavLink to={'/'}>About Us</NavLink>
                     <NavLink to={'/'}>Careers</NavLink>
                 </div>
-                <div className='footer__nav-info'>
-                    <h4 className='footer__nav-info--title footer__nav-info--title-more'>MORE</h4>
-                    <NavLink to={'/'}>Stash App</NavLink>
-                    <NavLink to={'/'}>Gift Vouchers</NavLink>
-                </div>
             </div>
-                <p className='footer__copyright'> &copy; Stash 2022 </p>
+            <p className='footer__copyright'> &copy; Stash 2022 </p>
         </footer>
     )
 }

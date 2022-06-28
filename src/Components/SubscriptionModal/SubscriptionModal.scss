@@ -90,4 +90,16 @@
             font-size: 0.75rem;
         }
     }
+
+    &-delete{
+        margin: 1rem 0;
+        padding: .5rem 1rem;
+        border-radius: 24px;
+        border: none;
+        color: red;
+
+        &:active{
+            transform: scale(.8);
+        }
+    }
 }

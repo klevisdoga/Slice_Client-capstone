@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './LoginPage.scss'
 
-const URL  = 'https://kd-slice-server.herokuapp.com'
+// const URL  = 'https://kd-slice-server.herokuapp.com'
 
 export default function LoginPage( props ) {
 
@@ -13,7 +13,7 @@ export default function LoginPage( props ) {
     const formHandler = (ev) => {
         ev.preventDefault()
 
-        axios.post(`${URL}/login`, {
+        axios.post(`${'kd-slice-server.herokuapp.com'}/login`, {
             email: ev.target.email.value,
             password: ev.target.password.value
         }).then((res) => {

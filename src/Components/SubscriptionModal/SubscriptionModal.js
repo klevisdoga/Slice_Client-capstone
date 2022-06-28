@@ -22,6 +22,7 @@ export default function Modal({ closeModal }) {
             <span className='sub__modal-info-span'>{'Next billing date'}</span>
           </div>
         </div>
+          <button className='sub__modal-delete'>DELETE</button>
       </div>
     </div>
   )

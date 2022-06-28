@@ -11,7 +11,7 @@ export default function LoginPage( props ) {
     const formHandler = (ev) => {
         ev.preventDefault()
 
-        axios.post('http://localhost:8888/login', {
+        axios.post(`/login`, {
             email: ev.target.email.value,
             password: ev.target.password.value
         }).then((res) => {

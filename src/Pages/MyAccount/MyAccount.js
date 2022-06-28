@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import './MyAccount.scss'
 import SubscriptionModal from '../../Components/SubscriptionModal/SubscriptionModal'
+import axios from 'axios'
 
 export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
 
@@ -20,6 +21,10 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
   const handleConnected = () => {
     setConnected(true)
   }
+
+  useEffect(() => {
+    // axios.get('/account/')
+  }, []);
 
   if (signedUp && !connected) {
     return (

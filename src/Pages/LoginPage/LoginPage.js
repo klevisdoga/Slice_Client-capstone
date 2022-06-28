@@ -6,6 +6,7 @@ import './LoginPage.scss'
 export default function LoginPage( props ) {
 
     const [error, setError] = useState(false)
+    const [userId, setUserId] = useState('')
 
     const formHandler = (ev) => {
         ev.preventDefault()
@@ -13,8 +14,12 @@ export default function LoginPage( props ) {
         axios.post('http://localhost:8888/login', {
             email: ev.target.email.value,
             password: ev.target.password.value
-        }).then(() => {
-            props.history.push('/account')
+        }).then((res) => {
+            sessionStorage.setItem('token', res.data.token)
+            sessionStorage.setItem('user_id', res.data.user_id)
+            setUserId(res.data.user_id)
+
+            props.history.push(`/`)
             props.handleLoggedIn()
         })
         .catch(() => {

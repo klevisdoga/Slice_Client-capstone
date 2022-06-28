@@ -11,6 +11,7 @@ import MyAccount from './Pages/MyAccount/MyAccount'
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [signedUp, setSignedUp] = useState(false)
+  const id = sessionStorage.getItem('user_id')
 
   const handleLoggedIn = () => {
     setLoggedIn(true)
@@ -39,7 +40,7 @@ function App() {
 
           {signedUp
             ?
-            <Redirect from='/signup' to='/account' />
+            <Redirect from='/signup' to={`/account/${id}`} />
             :
             <Route path='/signup' render={(routerProps) => {
               return (
@@ -60,9 +61,9 @@ function App() {
           }} />
 
           {!loggedIn
-            ? <Redirect from='/account' to='/login' />
+            ? <Redirect from='/account/' to='/login' />
             :
-            <Route path='/account' render={(routerProps) => {
+            <Route path='/account/:userId' exact render={(routerProps) => {
               return (
                 <MyAccount
                   handleLoggedOut={handleLoggedOut}

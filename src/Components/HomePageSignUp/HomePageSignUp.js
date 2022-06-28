@@ -4,13 +4,15 @@ import './HomePageSignUp.scss'
 
 export default function HomePageSignUp({ signedUp, loggedIn }) {
 
+    const id = sessionStorage.getItem('user_id')
+
     if (loggedIn) {
         return (
             <section className='homepage__signup'>
                 <div className='homepage__signup__text'>
                     <h1 className='homepage__signup__text-title'>Get started today.</h1>
                 </div>
-                <Link to={'/account'} className='homepage__signup-button homepage__signup-button--account'>My Account</Link>
+                <Link to={`/account/${id}`} className='homepage__signup-button homepage__signup-button--account'>My Account</Link>
             </section>
         )
     }

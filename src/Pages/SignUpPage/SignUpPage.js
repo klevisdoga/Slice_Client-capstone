@@ -10,6 +10,7 @@ export default function SignUpPage(props) {
 
     const [match, setMatch] = useState(true)
     const [error, setError] = useState(false)
+    const id = sessionStorage.getItem('user_id')
 
     const formHandler = (ev) => {
         ev.preventDefault()
@@ -27,22 +28,16 @@ export default function SignUpPage(props) {
                 email: ev.target.email.value,
                 password: ev.target.password.value,
             })
-                .then(() => {
+                .then((res) => {
                     props.handleLoggedIn()
                     props.handleSignedUp()
                     ev.target.reset()
+                    sessionStorage.setItem('user_id', res.data.userId)
                 })
                 .catch(() => {
                     setError(true)
                 })
-
-            if (props.SignedUp) {
-                <Redirect to='/account' />
-            }
-
         }
-
-
     }
 
     return (
@@ -54,7 +49,7 @@ export default function SignUpPage(props) {
                         <input type='text' name='firstName' className='signup__form-top-first' placeholder='First name' required />
                         <input type='text' name='lastName' className='signup__form-top-last' placeholder='Last name' required />
                     </div>
-                    <input type='text' name='email' placeholder='Your email address' required />
+                    <input type='email' name='email' placeholder='Your email address' required />
                     <div className='signup__form-bottom'>
                         <input type='password' name='password' className='signup__form-bottom-password' placeholder='Password' required />
                         <input type='password' name='confirmPass' className={`signup__form-bottom-confirm`} placeholder='Confirm' required />

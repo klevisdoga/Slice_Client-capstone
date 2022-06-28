@@ -13,7 +13,7 @@ export default function LoginPage( props ) {
     const formHandler = (ev) => {
         ev.preventDefault()
 
-        axios.post(`${'kd-slice-server.herokuapp.com'}/login`, {
+        axios.post(`${'http://kd-slice-server.herokuapp.com'}/login`, {
             email: ev.target.email.value,
             password: ev.target.password.value
         }).then((res) => {

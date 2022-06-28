@@ -5,13 +5,22 @@ import './LoginPage.scss'
 
 export default function LoginPage( props ) {
 
-    const [match, setMatch] = useState(true)
+    const [error, setError] = useState(false)
 
     const formHandler = (ev) => {
         ev.preventDefault()
 
-        props.history.push('/account')
-        props.handleLoggedIn()
+        axios.post('http://localhost:8888/login', {
+            email: ev.target.email.value,
+            password: ev.target.password.value
+        }).then(() => {
+            props.history.push('/account')
+            props.handleLoggedIn()
+        })
+        .catch(() => {
+            setError(true)
+        })
+        
     }
 
 
@@ -23,8 +32,8 @@ export default function LoginPage( props ) {
                 <form className='login__form' type='submit' onSubmit={formHandler} >
                     <input type='text' name='email' placeholder='Your email address' required />
                     <div className='login__form-bottom'>
-                        <input type='text' name='password' className='login__form-bottom-password' placeholder='Password' required />
-                        {!match ? <p className='login__form--dnm'>Incorrect password or email!</p> : ''}
+                        <input type='password' name='password' className='login__form-bottom-password' placeholder='Password' required />
+                        {error? <p className='login__form--dnm'>Incorrect Email/Password!</p> : ''}
                     </div>
                     <button className='login__form-button'>Log in</button>
                 </form>

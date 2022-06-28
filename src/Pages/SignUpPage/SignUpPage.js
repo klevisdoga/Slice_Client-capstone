@@ -3,25 +3,40 @@ import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import './SignUpPage.scss'
 
-export default function SignUpPage( props ) {
+// const SERVER_URL = process.env.REACT_APP_SERVER_URL
+
+
+export default function SignUpPage(props) {
 
     const [match, setMatch] = useState(true)
+    const [error, setError] = useState(false)
 
     const formHandler = (ev) => {
         ev.preventDefault()
 
         const password = ev.target.password.value
-        const confirm = ev.target.confirm.value
+        const confirm = ev.target.confirmPass.value
 
         if (confirm !== password) {
             setMatch(false)
-        } else if( confirm === password ){
+        } else if (confirm === password) {
 
-            // axios.post({`${SERVER}/signup`})
-            props.handleLoggedIn()
-            props.handleSignedUp()
-            
-            if(props.SignedUp) {
+            axios.post(`http://localhost:8888/signup`, {
+                firstName: ev.target.firstName.value,
+                lastName: ev.target.lastName.value,
+                email: ev.target.email.value,
+                password: ev.target.password.value,
+            })
+                .then(() => {
+                    props.handleLoggedIn()
+                    props.handleSignedUp()
+                    ev.target.reset()
+                })
+                .catch(() => {
+                    setError(true)
+                })
+
+            if (props.SignedUp) {
                 <Redirect to='/account' />
             }
 
@@ -29,7 +44,6 @@ export default function SignUpPage( props ) {
 
 
     }
-
 
     return (
         <div className='signup'>
@@ -42,9 +56,10 @@ export default function SignUpPage( props ) {
                     </div>
                     <input type='text' name='email' placeholder='Your email address' required />
                     <div className='signup__form-bottom'>
-                        <input type='text' name='password' className='signup__form-bottom-password' placeholder='Password' required />
-                        <input type='text' name='confirm' className={`signup__form-bottom-confirm`} placeholder='Confirm' required />
+                        <input type='password' name='password' className='signup__form-bottom-password' placeholder='Password' required />
+                        <input type='password' name='confirmPass' className={`signup__form-bottom-confirm`} placeholder='Confirm' required />
                         {!match ? <p className='signup__form--dnm'>Password does not match</p> : ''}
+                        {error ? <p className='signup__form--dnm'>Email already in use.</p> : ''}
                     </div>
                     <button className='signup__form-button'>Create Account</button>
                 </form>

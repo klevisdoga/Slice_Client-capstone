@@ -5,6 +5,8 @@ import SubscriptionModal from '../../Components/SubscriptionModal/SubscriptionMo
 import AddSubscriptionModal from '../../Components/AddSubscriptionModal/AddSubscriptionModal'
 import PageOptions from '../../Components/PageOptions/PageOptions'
 import axios from 'axios'
+import PlaidLinkButton from '../../Components/PlaidLinkButton/PlaidLinkButton.tsx'
+import { v4 as uuid } from 'uuid'
 
 export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
 
@@ -16,13 +18,16 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
 
   // State that holds data brought in from DB for the current user
   const [userData, setUserData] = useState(false)
+  const [userSubs, setUserSubs] = useState({status: false, subscriptions: []})
+  const [selectedSub, setSelectedSub] = useState('')
 
   // Functions for handling log out and the "Subscription Information" modal
   const signOut = () => {
     handleLoggedOut()
   }
-  const openModal = () => {
+  const openModal = (id) => {
     setModalOpen(true)
+    setSelectedSub(id)
   }
   const closeModal = () => {
     setModalOpen(false)
@@ -33,10 +38,6 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
   }
 
   //Functions for handling if the user chose to connect with bank or add subs manually
-  const handleConnected = () => {
-    setConnected(true)
-    setManually(false)
-  }
   const handleManually = () => {
     setConnected(false)
     setManually(true)
@@ -50,13 +51,15 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
       }
     })
       .then(res => [
-        setUserData(res.data[0])
+        setUserSubs({status: true,subscriptions:res.data[0].subscriptions}),
+        setUserData(res.data[0]),
+        res.data[0].connected === 'true' ? setConnected(true) : ''
       ])
   }, []);
 
-  if (signedUp && !connected) {
+  if (signedUp && !connected && !manually) {
     return (
-      <PageOptions handleConnected={handleConnected} handleManually={handleManually} />
+      <PageOptions handleManually={handleManually} />
     )
   }
 
@@ -72,17 +75,15 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
             <h1 className='account__upcoming-title'>Upcoming:</h1>
             <div className='account__upcoming-list'>
 
-              {userData.subscriptions ?
-                // {userData.subscriptions.map(sub => {
-                    // return (
-                      <div className='account__upcoming-listitem'>
-                        <h3 className='account__upcoming-listitem-title'>{'sub.title'}</h3>
-                        <span className='account__upcoming-listitem-date'>{'sub.date'}</span>
-                        <span className='account__upcoming-listitem-date'>{'`$${sub.amount} USD`'}</span>
-                      </div>
-                    // )
-                  // })
-                // }
+              {userSubs.status && userSubs.subscriptions ? JSON.parse(userSubs.subscriptions).map(info => {
+                return (
+                  <div key={uuid()} className='account__upcoming-listitem'>
+                    <h3 className='account__upcoming-listitem-title'>{info.name}</h3>
+                    <span className='account__upcoming-listitem-date'>{info.nextDate}</span>
+                    <span className='account__upcoming-listitem-date'>{`$${info.amount} USD`}</span>
+                  </div>
+                )
+              })
                 :
                 <p>No upcoming subscriptions</p>
               }
@@ -92,10 +93,15 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
             <h1 className='account__all-title'>All Subscriptions:</h1>
             <div className='account__all-list'>
 
-              {/* Will map throught data, and return one for each */}
-              <div className='account__all-listitem'>
-                <h3 onClick={openModal} className='account__all-listitem-title'>{'Title'}</h3>
-              </div>
+              {userSubs.status && userSubs.subscriptions ? JSON.parse(userSubs.subscriptions).map(subs => {
+                return (
+                  <div key={uuid()} className='account__all-listitem'>
+                    <h3 onClick={() => openModal(subs.id)} className='account__all-listitem-title'>{subs.name}</h3>
+                  </div>
+                )
+              })
+                : ''
+              }
 
               <div className='account__all-listitem'>
                 <button onClick={openAddModal} className='account__all-listitem--add'>Add</button>
@@ -138,7 +144,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
                   </>
                   :
                   <div className='account__settings-profile-info-container'>
-                    <button onClick={handleConnected} className='account__settings-connect'>Connect</button>
+                    <PlaidLinkButton />
                   </div>
                 }
               </div>
@@ -146,15 +152,12 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
 
           </div>
         </div>
-        {modalOpen ? <SubscriptionModal closeModal={closeModal} /> : ''}
+        {modalOpen ? <SubscriptionModal selectedSub={selectedSub} userSubs={userSubs} closeModal={closeModal} /> : ''}
         {addNew ? <AddSubscriptionModal closeModal={closeModal} /> : ''}
       </div>
     )
   }
 
   else
-
     <Redirect to='/login' />
-
-
 }

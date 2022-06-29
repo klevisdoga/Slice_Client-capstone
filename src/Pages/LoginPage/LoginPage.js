@@ -30,8 +30,6 @@ export default function LoginPage( props ) {
 
         
     }
-
-    console.log(process.env.REACT_APP_LOCAL_SERVER)
     
     return (
         <div className='login'>

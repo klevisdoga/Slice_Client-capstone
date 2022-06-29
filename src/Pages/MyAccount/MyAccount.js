@@ -72,28 +72,20 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
             <h1 className='account__upcoming-title'>Upcoming:</h1>
             <div className='account__upcoming-list'>
 
-              {/* Will map throught data, and return one for each */}
-              <div className='account__upcoming-listitem'>
-                <h3 className='account__upcoming-listitem-title'>{'Title'}</h3>
-                <span className='account__upcoming-listitem-date'>{'Aug 3 2022'}</span>
-                <span className='account__upcoming-listitem-date'>{'$7.99 USD'}</span>
-              </div>
-              {/* break -- rest is for visual */}
-              <div className='account__upcoming-listitem'>
-                <h3 className='account__upcoming-listitem-title'>{'Title'}</h3>
-                <span className='account__upcoming-listitem-date'>{'Aug 3 2022'}</span>
-                <span className='account__upcoming-listitem-date'>{'$7.99 USD'}</span>
-              </div>
-              <div className='account__upcoming-listitem'>
-                <h3 className='account__upcoming-listitem-title'>{'Title'}</h3>
-                <span className='account__upcoming-listitem-date'>{'Aug 3 2022'}</span>
-                <span className='account__upcoming-listitem-date'>{'$7.99 USD'}</span>
-              </div>
-              <div className='account__upcoming-listitem'>
-                <h3 className='account__upcoming-listitem-title'>{'Title'}</h3>
-                <span className='account__upcoming-listitem-date'>{'Aug 3 2022'}</span>
-                <span className='account__upcoming-listitem-date'>{'$7.99 USD'}</span>
-              </div>
+              {userData.subscriptions ?
+                // {userData.subscriptions.map(sub => {
+                    // return (
+                      <div className='account__upcoming-listitem'>
+                        <h3 className='account__upcoming-listitem-title'>{'sub.title'}</h3>
+                        <span className='account__upcoming-listitem-date'>{'sub.date'}</span>
+                        <span className='account__upcoming-listitem-date'>{'`$${sub.amount} USD`'}</span>
+                      </div>
+                    // )
+                  // })
+                // }
+                :
+                <p>No upcoming subscriptions</p>
+              }
             </div>
           </div>
           <div className='account__all'>

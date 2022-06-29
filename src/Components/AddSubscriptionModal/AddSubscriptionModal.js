@@ -9,7 +9,7 @@ export default function AddSubscriptionModal({ closeModal }) {
     const formHandler = (ev) => {
         ev.preventDefault()
 
-        axios.post('http://localhost:8888/subscription/add', {
+        axios.post(`${process.env.REACT_APP_LOCAL_SERVER}/subscription/add`, {
             user_id: user_id,
             title: ev.target.title.value,
             date: ev.target.date.value,

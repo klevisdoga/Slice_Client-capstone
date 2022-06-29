@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './LoginPage.scss'
 
-const SERVER_URL = 'http://kd-slice-server.herokuapp.com'
+
 
 export default function LoginPage( props ) {
 
@@ -13,7 +13,7 @@ export default function LoginPage( props ) {
     const formHandler = (ev) => {
         ev.preventDefault()
 
-        axios.post(`${'http://localhost:8888'}/login`, {
+        axios.post(`${process.env.REACT_APP_LOCAL_SERVER}/login`, {
             email: ev.target.email.value,
             password: ev.target.password.value
         }).then((res) => {
@@ -27,10 +27,12 @@ export default function LoginPage( props ) {
         .catch(() => {
             setError(true)
         })
+
         
     }
 
-
+    console.log(process.env.REACT_APP_LOCAL_SERVER)
+    
     return (
         <div className='login'>
             <h1 className='login__title'>Welcome Back.</h1>

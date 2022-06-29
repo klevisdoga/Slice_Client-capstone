@@ -22,7 +22,7 @@ export default function SignUpPage(props) {
             setMatch(false)
         } else if (confirm === password) {
 
-            axios.post(`${'http://localhost:8888'}/signup`, {
+            axios.post(`${process.env.REACT_APP_LOCAL_SERVER}/signup`, {
                 firstName: ev.target.firstName.value,
                 lastName: ev.target.lastName.value,
                 email: ev.target.email.value,

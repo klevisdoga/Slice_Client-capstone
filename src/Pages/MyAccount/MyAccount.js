@@ -44,7 +44,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
 
   // Get the users data(subscriptions) from DB
   useEffect(() => {
-    axios.get('http://localhost:8888/account', {
+    axios.get(`${process.env.REACT_APP_LOCAL_SERVER}/account`, {
       headers: {
         authorization: 'Bearer ' + token
       }

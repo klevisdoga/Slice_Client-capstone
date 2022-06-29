@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import './SignUpPage.scss'
 
-// const SERVER_URL = process.env.REACT_APP_SERVER_URL
+const SERVER_URL = 'http://kd-slice-server.herokuapp.com'
 
 
 export default function SignUpPage(props) {
@@ -22,7 +22,7 @@ export default function SignUpPage(props) {
             setMatch(false)
         } else if (confirm === password) {
 
-            axios.post(`${'http://kd-slice-server.herokuapp.com'}/signup`, {
+            axios.post(`${'http://localhost:8888'}/signup`, {
                 firstName: ev.target.firstName.value,
                 lastName: ev.target.lastName.value,
                 email: ev.target.email.value,

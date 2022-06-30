@@ -18,8 +18,37 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
 
   // State that holds data brought in from DB for the current user
   const [userData, setUserData] = useState(false)
-  const [userSubs, setUserSubs] = useState({status: false, subscriptions: []})
+  const [userSubs, setUserSubs] = useState({ status: false, subscriptions: [] })
+
+  // State that holds the ID of the subscription selected and if there are upcoming subscription dates
   const [selectedSub, setSelectedSub] = useState('')
+  const [upcoming, setUpcoming] = useState({ status: false, subscriptions: [] })
+
+  // creating a current date to compare next billing date and current
+  const today = new Date()
+  const day = String(today.getDate()).padStart(2, '0')
+  const month = String(today.getMonth() + 1).padStart(2, '0')
+  const year = String(today.getFullYear())
+  const currentDate = year + '-' + month + '-' + day
+
+  let nextWeek = new Date(today.getFullYear(), String(today.getMonth()).padStart(2, '0'), today.getDate() + 8).toISOString().slice(0, 10);
+  nextWeek = parseInt(nextWeek.split('-').join(''))
+
+  const handleUpcoming = () => {
+
+    let upcomingSubs = []
+    setTimeout(() => {
+
+      if (userSubs.status && userSubs.subscriptions) {
+        upcomingSubs = JSON.parse(userSubs.subscriptions)
+          .filter(item => parseInt(item.nextDate.split('-').join('')) < nextWeek)
+          .filter(item => parseInt(item.nextDate.split('-').join('')) > parseInt(currentDate.split('-').join('')))
+          setUpcoming({ status: true, subscriptions: upcomingSubs })
+      }
+    }, 500)
+    console.log(upcomingSubs)
+  }
+  handleUpcoming()
 
   // Functions for handling log out and the "Subscription Information" modal
   const signOut = () => {
@@ -48,12 +77,12 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
     axios.get(`${process.env.REACT_APP_LOCAL_SERVER}/account`, {
       headers: {
         authorization: 'Bearer ' + token
-      }
+      },
     })
       .then(res => [
-        setUserSubs({status: true,subscriptions:res.data[0].subscriptions}),
+        setUserSubs({ status: true, subscriptions: res.data[0].subscriptions }),
         setUserData(res.data[0]),
-        res.data[0].connected === 'true' ? setConnected(true) : ''
+        res.data[0].connected === 'true' ? setConnected(true) : '',
       ])
   }, []);
 
@@ -75,7 +104,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
             <h1 className='account__upcoming-title'>Upcoming:</h1>
             <div className='account__upcoming-list'>
 
-              {userSubs.status && userSubs.subscriptions ? JSON.parse(userSubs.subscriptions).map(info => {
+              {upcoming.status ? upcoming.subscriptions?.map(info => {
                 return (
                   <div key={uuid()} className='account__upcoming-listitem'>
                     <h3 className='account__upcoming-listitem-title'>{info.name}</h3>

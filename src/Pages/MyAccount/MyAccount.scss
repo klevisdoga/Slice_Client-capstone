@@ -144,6 +144,7 @@
             }
             &-title {
                 @extend .account__upcoming-listitem-title;
+                text-align: start;
                 font-size: 1.5rem;
                 margin-bottom: 1rem;
 

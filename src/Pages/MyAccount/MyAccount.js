@@ -10,10 +10,13 @@ import { v4 as uuid } from 'uuid'
 
 export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
 
+  //state responsible for whether or no the user opened "subscription information"/'add new subscription' or chose 'connected'/'manually' in the options page
   const [modalOpen, setModalOpen] = useState(false)
   const [addNew, setAddNew] = useState(false)
   const [connected, setConnected] = useState(false)
   const [manually, setManually] = useState(false)
+
+  //authentication token being sent to the server in useEffect below
   const token = sessionStorage.getItem('token')
 
   // State that holds data brought in from DB for the current user
@@ -23,32 +26,6 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
   // State that holds the ID of the subscription selected and if there are upcoming subscription dates
   const [selectedSub, setSelectedSub] = useState('')
   const [upcoming, setUpcoming] = useState({ status: false, subscriptions: [] })
-
-  // creating a current date to compare next billing date and current
-  const today = new Date()
-  const day = String(today.getDate()).padStart(2, '0')
-  const month = String(today.getMonth() + 1).padStart(2, '0')
-  const year = String(today.getFullYear())
-  const currentDate = year + '-' + month + '-' + day
-
-  let nextWeek = new Date(today.getFullYear(), String(today.getMonth()).padStart(2, '0'), today.getDate() + 8).toISOString().slice(0, 10);
-  nextWeek = parseInt(nextWeek.split('-').join(''))
-
-  const handleUpcoming = () => {
-
-    let upcomingSubs = []
-    setTimeout(() => {
-
-      if (userSubs.status && userSubs.subscriptions) {
-        upcomingSubs = JSON.parse(userSubs.subscriptions)
-          .filter(item => parseInt(item.nextDate.split('-').join('')) < nextWeek)
-          .filter(item => parseInt(item.nextDate.split('-').join('')) > parseInt(currentDate.split('-').join('')))
-          setUpcoming({ status: true, subscriptions: upcomingSubs })
-      }
-    }, 500)
-    console.log(upcomingSubs)
-  }
-  handleUpcoming()
 
   // Functions for handling log out and the "Subscription Information" modal
   const signOut = () => {
@@ -66,14 +43,40 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
     setAddNew(true)
   }
 
-  //Functions for handling if the user chose to connect with bank or add subs manually
+  //Function for handling if the user chose to add subscriptions manually
   const handleManually = () => {
     setConnected(false)
     setManually(true)
   }
 
-  // Get the users data(subscriptions) from DB
+
   useEffect(() => {
+    // creating a current date to compare next billing date and current  
+    const today = new Date()
+    const day = String(today.getDate()).padStart(2, '0')
+    const month = String(today.getMonth() + 1).padStart(2, '0')
+    const year = String(today.getFullYear())
+    const currentDate = year + '-' + month + '-' + day
+
+    //creating a 'next week date'
+    let nextWeek = new Date(today.getFullYear(), String(today.getMonth()).padStart(2, '0'), today.getDate() + 8).toISOString().slice(0, 10);
+    nextWeek = parseInt(nextWeek.split('-').join(''))
+
+    //using 'currentDate' and 'nextWeek' this ensures that the only data being shown in 'UPCOMING' are subscriptions that are within current day and end of next week
+    const handleUpcoming = () => {
+      let upcomingSubs = []
+
+      //filter that finds the subscriptions that are coming up within the following 7 days
+      if (userSubs.status && userSubs.subscriptions) {
+        upcomingSubs = JSON.parse(userSubs.subscriptions)
+          .filter(item => parseInt(item.nextDate.split('-').join('')) < nextWeek)
+          .filter(item => parseInt(item.nextDate.split('-').join('')) > parseInt(currentDate.split('-').join('')))
+        setUpcoming({ status: true, subscriptions: upcomingSubs })
+      }
+      console.log(upcomingSubs)
+    }
+
+    // Get the users data(subscriptions) from DB .then setting it to their appropriate states
     axios.get(`${process.env.REACT_APP_LOCAL_SERVER}/account`, {
       headers: {
         authorization: 'Bearer ' + token
@@ -84,14 +87,18 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
         setUserData(res.data[0]),
         res.data[0].connected === 'true' ? setConnected(true) : '',
       ])
-  }, []);
+      
+    handleUpcoming();
+  }, [token, userSubs.status, userSubs.subscriptions]);
 
+  // when the user first signs up they will be taken to the  optionsPage  where they chose to connect to their bank or manually input their subscriptions
   if (signedUp && !connected && !manually) {
     return (
       <PageOptions handleManually={handleManually} />
     )
   }
 
+  //once an option has been chosed they will see their account page holding their userData(name, email, etc) and their subscriptions
   else if (loggedIn || connected || manually) {
     return (
       <div className='account'>
@@ -103,7 +110,6 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
           <div className='account__upcoming'>
             <h1 className='account__upcoming-title'>Upcoming:</h1>
             <div className='account__upcoming-list'>
-
               {upcoming.status ? upcoming.subscriptions?.map(info => {
                 return (
                   <div key={uuid()} className='account__upcoming-listitem'>
@@ -121,7 +127,6 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
           <div className='account__all'>
             <h1 className='account__all-title'>All Subscriptions:</h1>
             <div className='account__all-list'>
-
               {userSubs.status && userSubs.subscriptions ? JSON.parse(userSubs.subscriptions).map(subs => {
                 return (
                   <div key={uuid()} className='account__all-listitem'>
@@ -131,7 +136,6 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
               })
                 : ''
               }
-
               <div className='account__all-listitem'>
                 <button onClick={openAddModal} className='account__all-listitem--add'>Add</button>
               </div>
@@ -187,6 +191,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
     )
   }
 
+  // if the user is not signed up or logged in, they will be redirected to the 'log in' page
   else
     <Redirect to='/login' />
 }

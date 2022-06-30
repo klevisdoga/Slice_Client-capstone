@@ -1,5 +1,5 @@
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.scss';
 import PageNav from './Components/PageNav/PageNav';
 import HomePage from './Pages/HomePage/HomePage';
@@ -19,11 +19,22 @@ function App() {
   const handleLoggedOut = () => {
     setLoggedIn(false)
     setSignedUp(false)
+    sessionStorage.removeItem('token')
+    sessionStorage.removeItem('user_id')
   }
 
   const handleSignedUp = () => {
     setSignedUp(true)
   }
+
+  const token = sessionStorage.getItem('token')
+  useEffect(() => {
+    if (!token) {
+      handleLoggedOut()
+    } else if (token) {
+      handleLoggedIn()
+    }
+  }, [token]);
 
   return (
     <div className="App">
@@ -60,7 +71,7 @@ function App() {
             )
           }} />
 
-          {!loggedIn
+          {!loggedIn && !token
             ? <Redirect from='/account/' to='/login' />
             :
             <Route path='/account/:userId' exact render={(routerProps) => {

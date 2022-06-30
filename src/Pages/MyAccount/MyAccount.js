@@ -87,7 +87,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
         setUserData(res.data[0]),
         res.data[0].connected === 'true' ? setConnected(true) : '',
       ])
-      
+
     handleUpcoming();
   }, [token, userSubs.status, userSubs.subscriptions]);
 
@@ -99,7 +99,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
   }
 
   //once an option has been chosed they will see their account page holding their userData(name, email, etc) and their subscriptions
-  else if (loggedIn || connected || manually) {
+  if (loggedIn || connected || manually || token) {
     return (
       <div className='account'>
         <div className='account__title-container'>
@@ -190,8 +190,4 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
       </div>
     )
   }
-
-  // if the user is not signed up or logged in, they will be redirected to the 'log in' page
-  else
-    <Redirect to='/login' />
 }

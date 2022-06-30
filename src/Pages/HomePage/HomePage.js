@@ -5,7 +5,6 @@ import HomePageSignUp from '../../Components/HomePageSignUp/HomePageSignUp'
 
 export default function HomePage({ loggedIn }) {
 
-
   return (
     <main className='homepage'>
       <HomePageHero />

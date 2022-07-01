@@ -33,6 +33,7 @@ export default function SignUpPage(props) {
                     props.handleSignedUp()
                     ev.target.reset()
                     sessionStorage.setItem('user_id', res.data.userId)
+                    sessionStorage.setItem('token', res.data.token)
                 })
                 .catch(() => {
                     setError(true)

@@ -101,5 +101,17 @@
         &:active{
             transform: scale(.8);
         }
+
+        &-container{
+            display: flex;
+            justify-content: space-evenly;
+            &--delete{
+                @extend .sub__modal-delete;
+            }
+            &--cancel{
+                @extend .sub__modal-delete;
+                color: $primary-dark;
+            }
+        }
     }
 }

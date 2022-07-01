@@ -2,26 +2,36 @@ import React from 'react'
 import axios from 'axios'
 import './AddSubscriptionModal.scss'
 import close from '../../Assets/Icons/shape.png'
+import { v4 as uuid } from 'uuid'
+import { nextDate } from '../../DateFunctions/DateFunctions'
 
-export default function AddSubscriptionModal({ closeModal }) {
+export default function AddSubscriptionModal({ closeModal, subscriptions }) {
+    const parsedSubscriptions = JSON.parse(subscriptions)
     const user_id = sessionStorage.getItem('user_id')
 
+    // function to submit new subscription to current users subscriptions in DB
     const formHandler = (ev) => {
         ev.preventDefault()
 
-        axios.post(`${process.env.REACT_APP_LOCAL_SERVER}/subscription/add`, {
-            user_id: user_id,
-            title: ev.target.title.value,
+        const newSubcriptionObject = {
+            id: uuid(),
+            name: ev.target.title.value,
             date: ev.target.date.value,
+            nextDate: nextDate(ev.target.date.value),
             amount: ev.target.amount.value
-        })
-        .then(res => {
-            console.log(res)
-            ev.target.reset()
-        })      
+        }
 
+        //creating a new array containing the object created above and the already collected list of subscriptions
+        const newSubcriptionArray = [...parsedSubscriptions, newSubcriptionObject]
 
+        axios.post(`${process.env.REACT_APP_LOCAL_SERVER}/subscription/add`, { subscriptions: newSubcriptionArray, user_id: user_id })
+            .then(res => {
+                console.log(res)
+                ev.target.reset()
+                closeModal()
+            })
     }
+
     return (
         <div className='addsub__modal-container'>
             <div className='addsub__modal'>

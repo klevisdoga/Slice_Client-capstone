@@ -1,13 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './SubscriptionModal.scss'
 import close from '../../Assets/Icons/shape.png'
+import axios from 'axios'
 
 export default function Modal({ closeModal, userSubs, selectedSub }) {
 
-  if(userSubs.status && userSubs.subscriptions) {
+  const [deleted, setDeleted] = useState({selected:false, confirmed: false}) // to see if the user selected delete and/or confirmed their decision
+  const user_id = sessionStorage.getItem('user_id')
+
+  if(deleted.selected && deleted.confirmed){
+    const filteredSubs = JSON.parse(userSubs.subscriptions).filter(info => info.id !== selectedSub)
+ 
+    axios.delete(`${process.env.REACT_APP_LOCAL_SERVER}/subscription/delete`, {data: {
+      subscriptions: filteredSubs,
+      user_id: user_id
+    }})
+    .then(res => {
+      console.log(res)
+      closeModal()
+    })
+  }
+  
+  // to ensure the data is there before showing any details
+  if (userSubs.status && userSubs.subscriptions) {
 
     const subInfo = JSON.parse(userSubs.subscriptions)
-    const filteredInfo = subInfo.find(info => info.id ===  selectedSub)
+    const filteredInfo = subInfo.find(info => info.id === selectedSub)
 
     return (
       <div className='sub__modal-container'>
@@ -28,7 +46,18 @@ export default function Modal({ closeModal, userSubs, selectedSub }) {
               <span className='sub__modal-info-span'>{filteredInfo.nextDate}</span>
             </div>
           </div>
-            <button className='sub__modal-delete'>DELETE</button>
+          {!deleted.selected
+            ? <button onClick={() => setDeleted({selected: true, confirmed: false})} className='sub__modal-delete'>DELETE</button>
+            : "" }
+            {deleted.selected ? 
+            <div>
+              <p>Are you sure you want to delete {filteredInfo.name}?</p>
+              <div className='sub__modal-delete-container'>
+                <button onClick={closeModal} className='sub__modal-delete-container--cancel'>CANCEL</button>
+                <button onClick={() => setDeleted({selected: true, confirmed: true})} className='sub__modal-delete-container--delete'>DELETE</button>
+              </div>
+            </div> : ""}
+
         </div>
       </div>
     )

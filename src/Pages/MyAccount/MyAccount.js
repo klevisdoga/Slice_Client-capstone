@@ -7,25 +7,20 @@ import PageOptions from '../../Components/PageOptions/PageOptions'
 import axios from 'axios'
 import PlaidLinkButton from '../../Components/PlaidLinkButton/PlaidLinkButton.tsx'
 import { v4 as uuid } from 'uuid'
+import { handleDates } from '../../DateFunctions/DateFunctions'
 
 export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
 
-  //state responsible for whether or no the user opened "subscription information"/'add new subscription' or chose 'connected'/'manually' in the options page
-  const [modalOpen, setModalOpen] = useState(false)
-  const [addNew, setAddNew] = useState(false)
-  const [connected, setConnected] = useState(false)
-  const [manually, setManually] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false) // to see if the user clicked on a subscription
+  const [addNew, setAddNew] = useState(false) // to see if the user selected to add a new subscription
+  const [connected, setConnected] = useState(false) // to see if the user chose to connect to their bank
+  const [manually, setManually] = useState(false) // to see if the user chose to add subscriptions manually
+  const [userData, setUserData] = useState(false) // all of the users information except password
+  const [userSubs, setUserSubs] = useState({ status: false, subscriptions: [] }) // all of the users subscriptions
+  const [selectedSub, setSelectedSub] = useState('') // the ID of the selected subscription
+  const [upcoming, setUpcoming] = useState({ status: false, subscriptions: [] }) // object of all upcoming subscriptions
 
-  //authentication token being sent to the server in useEffect below
-  const token = sessionStorage.getItem('token')
-
-  // State that holds data brought in from DB for the current user
-  const [userData, setUserData] = useState(false)
-  const [userSubs, setUserSubs] = useState({ status: false, subscriptions: [] })
-
-  // State that holds the ID of the subscription selected and if there are upcoming subscription dates
-  const [selectedSub, setSelectedSub] = useState('')
-  const [upcoming, setUpcoming] = useState({ status: false, subscriptions: [] })
+  const token = sessionStorage.getItem('token') // authentication token sent from server
 
   // Functions for handling log out and the "Subscription Information" modal
   const signOut = () => {
@@ -49,31 +44,26 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
     setManually(true)
   }
 
-
+  // function to tell the browser what to do on inital render of the page
   useEffect(() => {
-    // creating a current date to compare next billing date and current  
-    const today = new Date()
-    const day = String(today.getDate()).padStart(2, '0')
-    const month = String(today.getMonth() + 1).padStart(2, '0')
-    const year = String(today.getFullYear())
-    const currentDate = year + '-' + month + '-' + day
 
-    //creating a 'next week date'
-    let nextWeek = new Date(today.getFullYear(), String(today.getMonth()).padStart(2, '0'), today.getDate() + 8).toISOString().slice(0, 10);
-    nextWeek = parseInt(nextWeek.split('-').join(''))
+    const currentDate = handleDates().currentDate; // creating a current date to compare next billing date and current  
+    const nextWeek = handleDates().nextWeek; //creating a 'next week date'
 
-    //using 'currentDate' and 'nextWeek' this ensures that the only data being shown in 'UPCOMING' are subscriptions that are within current day and end of next week
     const handleUpcoming = () => {
       let upcomingSubs = []
 
       //filter that finds the subscriptions that are coming up within the following 7 days
       if (userSubs.status && userSubs.subscriptions) {
         upcomingSubs = JSON.parse(userSubs.subscriptions)
-          .filter(item => parseInt(item.nextDate.split('-').join('')) < nextWeek)
-          .filter(item => parseInt(item.nextDate.split('-').join('')) > parseInt(currentDate.split('-').join('')))
+          .filter(item => {
+            return parseInt(item.nextDate.split('-').join('')) < nextWeek
+          })
+          .filter(item => {
+            return parseInt(item.nextDate.split('-').join('')) > currentDate
+          })
         setUpcoming({ status: true, subscriptions: upcomingSubs })
       }
-      console.log(upcomingSubs)
     }
 
     // Get the users data(subscriptions) from DB .then setting it to their appropriate states
@@ -89,7 +79,9 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
       ])
 
     handleUpcoming();
+    
   }, [token, userSubs.status, userSubs.subscriptions]);
+
 
   // when the user first signs up they will be taken to the  optionsPage  where they chose to connect to their bank or manually input their subscriptions
   if (signedUp && !connected && !manually) {
@@ -106,6 +98,8 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
           <h2 className='account__title'>Account</h2>
           <p className='account__signout' onClick={signOut}>Sign Out</p>
         </div>
+
+        {/* Upcoming subscription dates */}
         <div className='account__main'>
           <div className='account__upcoming'>
             <h1 className='account__upcoming-title'>Upcoming:</h1>
@@ -118,12 +112,11 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
                     <span className='account__upcoming-listitem-date'>{`$${info.amount} USD`}</span>
                   </div>
                 )
-              })
-                :
-                <p>No upcoming subscriptions</p>
-              }
+              }) : <p>No upcoming subscriptions</p>}
             </div>
           </div>
+
+          {/* List of all subscriptions */}
           <div className='account__all'>
             <h1 className='account__all-title'>All Subscriptions:</h1>
             <div className='account__all-list'>
@@ -133,14 +126,14 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
                     <h3 onClick={() => openModal(subs.id)} className='account__all-listitem-title'>{subs.name}</h3>
                   </div>
                 )
-              })
-                : ''
-              }
+              }) : ''}
               <div className='account__all-listitem'>
                 <button onClick={openAddModal} className='account__all-listitem--add'>Add</button>
               </div>
             </div>
           </div>
+
+          {/* User profile settings and information */}
           <div className='account__settings'>
             <div className='account__settings-profile'>
               <h3 className='account__settings-profile-title'>My Profile</h3>
@@ -174,19 +167,14 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
                       <h3 className='account__settings-profile-info-title'>Account Balance</h3>
                       <h4 className='account__settings-profile-info-span'>$0.01 USD</h4>
                     </div>
-                  </>
-                  :
-                  <div className='account__settings-profile-info-container'>
-                    <PlaidLinkButton />
-                  </div>
-                }
+                  </> : <div className='account__settings-profile-info-container'><PlaidLinkButton /></div>}
               </div>
             </div>
 
           </div>
         </div>
         {modalOpen ? <SubscriptionModal selectedSub={selectedSub} userSubs={userSubs} closeModal={closeModal} /> : ''}
-        {addNew ? <AddSubscriptionModal closeModal={closeModal} /> : ''}
+        {addNew ? <AddSubscriptionModal closeModal={closeModal} subscriptions={userSubs.subscriptions} /> : ''}
       </div>
     )
   }

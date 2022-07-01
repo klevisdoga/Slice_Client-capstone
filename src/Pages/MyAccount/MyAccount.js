@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
 import './MyAccount.scss'
 import SubscriptionModal from '../../Components/SubscriptionModal/SubscriptionModal'
 import AddSubscriptionModal from '../../Components/AddSubscriptionModal/AddSubscriptionModal'
@@ -8,11 +7,13 @@ import axios from 'axios'
 import PlaidLinkButton from '../../Components/PlaidLinkButton/PlaidLinkButton.tsx'
 import { v4 as uuid } from 'uuid'
 import { handleDates } from '../../DateFunctions/DateFunctions'
+import UpdateInfoModal from '../../Components/UpdateInfoModal/UpdateInfoModal'
 
 export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
 
   const [modalOpen, setModalOpen] = useState(false) // to see if the user clicked on a subscription
   const [addNew, setAddNew] = useState(false) // to see if the user selected to add a new subscription
+  const [updateInfo, setUpdateInfo] = useState(false) // to see if the user chose to update their personal information (name/email)
   const [connected, setConnected] = useState(false) // to see if the user chose to connect to their bank
   const [manually, setManually] = useState(false) // to see if the user chose to add subscriptions manually
   const [userData, setUserData] = useState(false) // all of the users information except password
@@ -22,7 +23,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
 
   const token = sessionStorage.getItem('token') // authentication token sent from server
 
-  // Functions for handling log out and the "Subscription Information" modal
+  // Functions for handling log out and the "Subscription Information"/"User Information" modal
   const signOut = () => {
     handleLoggedOut()
   }
@@ -30,12 +31,17 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
     setModalOpen(true)
     setSelectedSub(id)
   }
+  const openAddModal = () => {
+    setAddNew(true)
+  }
+  const openUpdateModal = () => {
+    setUpdateInfo(true)
+  }
   const closeModal = () => {
     setModalOpen(false)
     setAddNew(false)
-  }
-  const openAddModal = () => {
-    setAddNew(true)
+    setUpdateInfo(false)
+    window.location.reload(true)
   }
 
   //Function for handling if the user chose to add subscriptions manually
@@ -79,7 +85,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
       ])
 
     handleUpcoming();
-    
+
   }, [token, userSubs.status, userSubs.subscriptions]);
 
 
@@ -142,13 +148,8 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
                   <h3 className='account__settings-profile-info-title'>Account Information</h3>
                   <h4 className='account__settings-profile-info-span'>{`${userData.firstName} ${userData.lastName}`}</h4>
                   <h4 className='account__settings-profile-info-span'>{userData.userName ? userData.userName : ''}</h4>
-                  <span className='account__settings-profile-info-edit'>Edit</span>
-                </div>
-                <div className='account__settings-profile-info-container'>
-                  <h3 className='account__settings-profile-info-title'>Contact Information</h3>
                   <h4 className='account__settings-profile-info-span'>{userData.email}</h4>
-                  <h4 className='account__settings-profile-info-span'>{userData.phone ? userData.phone : ''}</h4>
-                  <span className='account__settings-profile-info-edit'>Edit</span>
+                  <span onClick={openUpdateModal} className='account__settings-profile-info-edit'>Edit</span>
                 </div>
               </div>
             </div><div className='account__settings-profile'>
@@ -175,6 +176,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
         </div>
         {modalOpen ? <SubscriptionModal selectedSub={selectedSub} userSubs={userSubs} closeModal={closeModal} /> : ''}
         {addNew ? <AddSubscriptionModal closeModal={closeModal} subscriptions={userSubs.subscriptions} /> : ''}
+        {updateInfo ? <UpdateInfoModal closeModal={closeModal} userData={userData} handleLoggedOut={handleLoggedOut} /> : ""}
       </div>
     )
   }

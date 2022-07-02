@@ -1,111 +1,149 @@
-@use '../../Partials/mixins' as *;
-@use '../../Partials/variables' as *;
+@use "../../Partials/mixins" as *;
+@use "../../Partials/variables" as *;
 
-.about{
-    &__hero{
+.about {
+    &__hero {
         background-color: $primary-dark;
-        height: 5rem;
+        height: 8rem;
         display: flex;
         justify-content: center;
         align-items: center;
 
-        @include tablet{
-            display: none;
-        }
-
-        &-title{
+        &-title {
             color: $primary-light;
+            font-size: 5.4rem;
+            font-weight: 400;
+            text-align: center;
         }
     }
 
-    &__partners{
-            position: relative;
-            height: 2rem;
-            border-bottom: 1px solid $primary-dark;
-            overflow: hidden;
-    
-            @include tablet{
-                height: 4rem;
-                border-top: 1px solid $primary-dark;
-            }
-            
-            &-images{
-                display: flex;
-                align-items: center;
-                position: absolute;
-                min-width: 100%;
-                animation: partners 20s linear infinite;
-            }
-    
-            &-image{
-                width: 50px;
-                margin-left: 2rem;
-    
-                @include tablet{
-                    width: 100px;
-                }
-            }
+    &__partners {
+        position: relative;
+        height: 2rem;
+        border-bottom: 1px solid rgba($color: $primary-dark, $alpha: 0.3);
+        overflow: hidden;
+
+        @include tablet {
+            height: 4rem;
+            border-top: 1px solid rgba($color: $primary-dark, $alpha: 0.3);
         }
 
-    &__body{
-        padding: 3rem 1rem;
+        @include desktop {
+            margin-bottom: 4rem;
+        }
+
+        &-images {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            min-width: 100%;
+            animation: partners 20s linear infinite;
+        }
+
+        &-image {
+            width: 50px;
+            margin-left: 2rem;
+
+            @include tablet {
+                width: 100px;
+            }
+        }
+    }
+
+    &__body {
+        padding-bottom: 3rem;
 
         @include tablet{
-            background-color:rgba($color: $para-dark, $alpha: .2);
-            border-radius: 24px;
-            margin: 2rem 3rem;
+            display: flex;
+            flex-direction: column;
         }
 
-        &-purpose{
+        &-purpose {
             display: flex;
             flex-direction: column;
             align-items: center;
+            background-color: $primary-dark;
+            padding: 4rem 1rem;
 
-            &-title{
-                margin: 0;
-                text-align: center;
-                font-size: 2rem;
-                padding-bottom: 1rem;
+            @include tablet{
+                // border-radius: 24px;
+                padding: 4rem 2rem;
+                padding-bottom: 15rem;
             }
 
-            &-text{
-                text-align: center;
-                color: $para-light;
-                margin: 0;
-                margin-top: .5rem;
+            &-title {
+                color: $primary-light;
+                align-self: flex-start;
+            }
 
-                @include tablet{
-                    padding: 0;
+            &-text {
+                text-align: left;
+                margin-top: 1rem;
+                margin-bottom: 0;
+
+                @include tablet {
                     margin: 0;
+                    align-self: flex-start
                 }
             }
         }
 
-        &-me{
-            @extend .about__body-purpose;
-            padding-top: 2rem;
+        &-divider{
+            display: none;
 
             @include tablet{
-                padding-top: 4rem
+                display: initial;
+                position: absolute;
+                transform: skewY(-20deg);
+                top: 50.5rem;
+                width: 100%;
+                background-color: white;
+            } background-color: $primary-dark;
+
+            &--slice{
+                width: 100%;
+                height: 18.7rem;
+                background-color: #f0ede8
+            }
+        }
+
+        &-me {
+            @extend .about__body-purpose;
+            background-color: #f0ede8;
+
+            @include tablet {
+                padding-top: 0;
+                padding-bottom: 4rem
             }
 
-            &-title{
+            &-title {
                 @extend .about__body-purpose-title;
+                color: $primary-dark;
+                align-self: flex-end;
+                z-index: 1;
             }
 
-            &-text{
+            &-text {
                 @extend .about__body-purpose-text;
-                margin: 0;
+                color: $para-light;
+                align-self: flex-end;
+                z-index: 1;
 
                 & a {
+                    color: $primary-dark;
                     text-decoration: none;
-                    color: blue;
                 }
             }
 
-            &-endtext{
+            &-endtext {
                 margin: 0 auto;
+                padding: 0 1rem;
                 padding-top: 4rem;
+
+                & a {
+                    color: black;
+                    text-decoration: none;
+                }
             }
         }
     }
@@ -114,7 +152,7 @@
     from {
         transform: translateX(0%);
     }
-    to{
+    to {
         transform: translateX(-33.33%);
     }
 }

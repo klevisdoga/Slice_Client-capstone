@@ -15,38 +15,32 @@
     }
 
     &__partners{
-        position: relative;
-        height: 2rem;
-        border-bottom: 1px solid $primary-dark;
-        overflow: hidden;
-
-        @include tablet{
-            height: 4rem;
-        }
-        
-        &-images{
-            display: flex;
-            align-items: center;
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 400%;
-            animation: partners 20s linear infinite;
-
+            position: relative;
+            height: 2rem;
+            border-bottom: 1px solid $primary-dark;
+            overflow: hidden;
+    
             @include tablet{
-                width: 200%;
+                height: 4rem;
+            }
+            
+            &-images{
+                display: flex;
+                align-items: center;
+                position: absolute;
+                min-width: 100%;
+                animation: partners 20s linear infinite;
+            }
+    
+            &-image{
+                width: 50px;
+                margin-left: 2rem;
+    
+                @include tablet{
+                    width: 100px;
+                }
             }
         }
-
-        &-image{
-            width: 50px;
-            margin-left: 2rem;
-
-            @include tablet{
-                width: 100px;
-            }
-        }
-    }
 
     &__body{
         padding: 3rem 1rem;
@@ -112,22 +106,10 @@
     }
 }
 @keyframes partners {
-    0% {
-        left: 0;
+    from {
+        transform: translateX(0%);
     }
-    100%{
-        left: -196.6%;
+    to{
+        transform: translateX(-50%);
     }
-}
-@include tablet{
-
-    @keyframes partners {
-        0% {
-            left: 0;
-        }
-        100%{
-            left: -154.6%;
-        }
-    }
-
 }

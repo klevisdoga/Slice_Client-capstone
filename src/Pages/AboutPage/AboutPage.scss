@@ -9,6 +9,10 @@
         justify-content: center;
         align-items: center;
 
+        @include tablet{
+            display: none;
+        }
+
         &-title{
             color: $primary-light;
         }
@@ -22,6 +26,7 @@
     
             @include tablet{
                 height: 4rem;
+                border-top: 1px solid $primary-dark;
             }
             
             &-images{
@@ -110,6 +115,6 @@
         transform: translateX(0%);
     }
     to{
-        transform: translateX(-50%);
+        transform: translateX(-33.33%);
     }
 }

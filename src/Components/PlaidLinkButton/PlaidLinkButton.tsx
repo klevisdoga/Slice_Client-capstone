@@ -27,6 +27,7 @@ export default function PlaidLinkButton({handleConnected}) {
           user_id: id
         })
           .then(resolve => {
+            window.location.reload(true)
           })
       })
   }, []);

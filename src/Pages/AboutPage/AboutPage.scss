@@ -1,0 +1,85 @@
+@use '../../Partials/mixins' as *;
+@use '../../Partials/variables' as *;
+
+.about{
+    &__hero{
+        background-color: $primary-dark;
+        height: 5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &-title{
+            color: $primary-light;
+        }
+    }
+
+    &__partners{
+        position: relative;
+        height: 2rem;
+        border-bottom: 1px solid $primary-dark;
+        overflow: hidden;
+        
+        &-images{
+            display: flex;
+            align-items: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 400%;
+            animation: partners 20s linear infinite;
+        }
+        &-image{
+            width: 50px;
+            margin-left: 2rem;
+        }
+    }
+
+    &__body{
+        padding: 3rem 1rem;
+
+        &-purpose{
+            &-title{
+                margin: 0;
+                text-align: center;
+                font-size: 2rem;
+                padding-bottom: 1rem;
+            }
+            &-text{
+                text-align: left;
+                color: $para-light;
+                margin-top: .5rem;
+            }
+        }
+
+        &-me{
+            padding-top: 2rem;
+
+            &-title{
+                @extend .about__body-purpose-title;
+            }
+
+            &-text{
+                @extend .about__body-purpose-text;
+                margin: 0;
+                & a {
+                    text-decoration: none;
+                    color: blue;
+                }
+            }
+
+            &-endtext{
+                margin: 0;
+                margin-top: 3rem;
+            }
+        }
+    }
+}
+@keyframes partners {
+    0% {
+        left: 0;
+    }
+    100%{
+        left: -196.6%;
+    }
+}

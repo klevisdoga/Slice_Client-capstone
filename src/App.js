@@ -6,7 +6,8 @@ import HomePage from './Pages/HomePage/HomePage';
 import SignUpPage from './Pages/SignUpPage/SignUpPage';
 import PageFooter from './Components/PageFooter/PageFooter';
 import LoginPage from './Pages/LoginPage/LoginPage';
-import MyAccount from './Pages/MyAccount/MyAccount'
+import MyAccount from './Pages/MyAccount/MyAccount';
+import AboutPage from './Pages/AboutPage/AboutPage';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -84,6 +85,7 @@ function App() {
               )
             }} />
           }
+          <Route path='/about' component={AboutPage} />
         </Switch>
         <PageFooter />
       </BrowserRouter>

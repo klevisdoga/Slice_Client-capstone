@@ -6,30 +6,55 @@ import { v4 as uuid } from 'uuid'
 import { nextDate } from '../../DateFunctions/DateFunctions'
 
 export default function AddSubscriptionModal({ closeModal, subscriptions }) {
-    const parsedSubscriptions = JSON.parse(subscriptions)
+
     const user_id = sessionStorage.getItem('user_id')
+
 
     // function to submit new subscription to current users subscriptions in DB
     const formHandler = (ev) => {
-        ev.preventDefault()
 
-        const newSubcriptionObject = {
-            id: uuid(),
-            name: ev.target.title.value,
-            date: ev.target.date.value,
-            nextDate: nextDate(ev.target.date.value),
-            amount: ev.target.amount.value
+        if (subscriptions) {
+            const parsedSubscriptions = JSON.parse(subscriptions)
+
+            ev.preventDefault()
+
+            const newSubcriptionObject = {
+                id: uuid(),
+                name: ev.target.title.value,
+                date: ev.target.date.value,
+                nextDate: nextDate(ev.target.date.value),
+                amount: ev.target.amount.value
+            }
+
+            //creating a new array containing the object created above and the already collected list of subscriptions
+            const newSubcriptionArray = [...parsedSubscriptions, newSubcriptionObject]
+
+            axios.post(`${process.env.REACT_APP_LOCAL_SERVER}/subscription/add`, { subscriptions: newSubcriptionArray, user_id: user_id })
+                .then(res => {
+                    console.log(res)
+                    ev.target.reset()
+                    closeModal()
+                })
         }
 
-        //creating a new array containing the object created above and the already collected list of subscriptions
-        const newSubcriptionArray = [...parsedSubscriptions, newSubcriptionObject]
+        else if (!subscriptions) {
 
-        axios.post(`${process.env.REACT_APP_LOCAL_SERVER}/subscription/add`, { subscriptions: newSubcriptionArray, user_id: user_id })
-            .then(res => {
-                console.log(res)
-                ev.target.reset()
-                closeModal()
-            })
+            const newSubscription = [{
+                id: uuid(),
+                name: ev.target.title.value,
+                date: ev.target.date.value,
+                nextDate: nextDate(ev.target.date.value),
+                amount: ev.target.amount.value
+            }]
+
+            axios.post(`${process.env.REACT_APP_LOCAL_SERVER}/subscription/add`,
+                { subscriptions: newSubscription, user_id: user_id })
+                .then(res => {
+                    console.log(res)
+                    ev.target.reset()
+                    closeModal()
+                })
+        }
     }
 
     return (

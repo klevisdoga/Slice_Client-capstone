@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import axios from "axios"
 import { usePlaidLink, PlaidLinkOnSuccess } from 'react-plaid-link';
 
-export default function PlaidLinkButton({handleConnected}) {
+export default function PlaidLinkButton() {
   const [token, setToken] = useState<string | null>(null);
   const id = sessionStorage.getItem('user_id')
 

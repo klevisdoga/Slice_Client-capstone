@@ -51,8 +51,8 @@ export default function AboutPage() {
                     </p>
                 </div>
                 <p className='about__body-me-endtext'>
-                    If you'd like to know a little bit more about or Slice, feel free to reach out and <a href='https://www.linkedin.com/in/klevisdoga' target="_blank" rel="noreferrer">connect</a>!<br />
-                    I hope you either found some value out of Slice App!
+                    If you'd like to know a little bit more about Slice or myself, feel free to reach out and <a href='https://www.linkedin.com/in/klevisdoga' target="_blank" rel="noreferrer">connect</a>!<br />
+                    I hope you found some value out of Slice App!
                 </p>
             </div>
         </div >

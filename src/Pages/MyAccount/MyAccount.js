@@ -112,7 +112,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
           <p className='account__signout' onClick={signOut}>Sign Out</p>
         </div>
 
-        {/* Upcoming subscription dates */}
+        {/* Upcoming subscriptions */}
         <div className='account__main'>
           <div className='account__upcoming'>
             <h1 className='account__upcoming-title'>Upcoming:</h1>

@@ -73,15 +73,19 @@
         }
         @include desktop {
             margin-top: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
             flex-direction: row;
         }
 
         &--box {
             display: flex;
             flex-direction: column;
+            width: 100%;
 
             @include desktop{
                 margin-right: 1rem;
+                width: 30%;
             }
             & label {
                 color: $primary-light;

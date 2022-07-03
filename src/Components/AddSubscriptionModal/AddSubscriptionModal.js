@@ -69,7 +69,7 @@ export default function AddSubscriptionModal({ closeModal, subscriptions }) {
                     </div>
                     <div className='addsub__modal-info--box'>
                         <label htmlFor='date'>Last Billing Date</label>
-                        <input type='text' name='date' placeholder='2022-03-01' required />
+                        <input type='date' name='date' placeholder='2022-03-01' required />
                     </div>
                     <div className='addsub__modal-info--box'>
                         <label htmlFor='amount'>Amount</label>

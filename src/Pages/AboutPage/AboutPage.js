@@ -28,10 +28,13 @@ export default function AboutPage() {
                         or logging into your online banking via Plaid and finding your subscriptions through your transaction history.
                         Slice is completely free and easy to use!
                     </p>
+                    <div className='about__body-divider'>
+                        <div className='about__body-divider--slice'></div>
+                    </div>
                 </div>
-                <div className='about__body-divider'>
+                {/* <div className='about__body-divider'>
                     <div className='about__body-divider--slice'></div>
-                </div>
+                </div> */}
                 <div className='about__body-me'>
                     <h1 className='about__body-me-title'>The developer</h1>
                     <p className='about__body-me-text'>

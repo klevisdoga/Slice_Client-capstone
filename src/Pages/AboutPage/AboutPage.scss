@@ -111,9 +111,9 @@
                 height: 30rem;
                 background-color: #f0ede8;
 
-                // @include desktop{
-                //     height: 40rem
-                // }
+                @include desktop{
+                    height: 25rem
+                }
             }
         }
 

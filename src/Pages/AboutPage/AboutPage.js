@@ -47,7 +47,7 @@ export default function AboutPage() {
                         The most rewarding aspect of this industry is tackling problems, as the feeling of solving them is euphoric.
                         It's because of this passion and approach that I decided to pursue a career as a programmer...
                         the ability to develop something with the potential of transforming people's lives while also solving complex problems on a daily basis.
-                        I believe that being a developer is much more than a career. It allows you to be free, creative, and constantly learn and innovate as things are forever growing.
+                        I believe that being a developer is much more than a career. It allows for creative freedom, progressive learning, and innovation as endless possibilities become accessible.
                     </p>
                 </div>
                 <p className='about__body-me-endtext'>

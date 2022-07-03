@@ -1,4 +1,5 @@
 import React from 'react'
+import {v4 as uuid} from 'uuid'
 import appleMusic from '../../Assets/Images/partners/2560px-Apple_Music_logo.svg.png'
 import doorDash from '../../Assets/Images/partners/2560px-DoorDash_Logo.svg.png'
 import amazonPrime from '../../Assets/Images/partners/Amazon_Prime_Video_logo.svg.png'
@@ -17,7 +18,7 @@ export default function PartnerImages() {
     <div className='about__partners-images' >
       {images.map(image => {
         return (
-          <img className='about__partners-image' src={image} alt='apple music badge' />
+          <img key={uuid()} className='about__partners-image' src={image} alt='apple music badge' />
         )
       })}
     </div>

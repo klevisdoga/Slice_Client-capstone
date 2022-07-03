@@ -66,9 +66,14 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
             return parseInt(item.nextDate.split('-').join('')) < nextWeek
           })
           .filter(item => {
-            return parseInt(item.nextDate.split('-').join('')) > currentDate
+            return parseInt(item.nextDate.split('-').join('')) >= currentDate
           })
         setUpcoming({ status: true, subscriptions: upcomingSubs })
+
+        // to ensure that if there are no upcoming subs, status remains false
+        if(upcomingSubs.length === 0){
+          setUpcoming({status: false, subscriptions: []})
+        }
       }
     }
 

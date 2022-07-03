@@ -68,8 +68,8 @@
             }
 
             @include desktop{
-                padding: 4rem 4rem;
-                padding-bottom: 20rem;
+                padding: 11rem 4rem;
+                padding-bottom: 13rem;
             }
 
             &-title {
@@ -118,33 +118,6 @@
             }
         }
 
-        // &-divider{
-        //     display: none;
-
-        //     @include tablet{
-        //         display: initial;
-        //         position: absolute;
-        //         transform: skewY(-20deg);
-        //         top: 49rem;
-        //         width: 100%;
-        //     }
-
-        //     @include desktop{
-        //         transform: skewY(-15deg);
-        //         top: 53rem;
-        //     }
-
-        //     &--slice{
-        //         width: 100%;
-        //         height: 23rem;
-        //         background-color: #f0ede8;
-
-        //         // @include desktop{
-        //         //     height: 40rem
-        //         // }
-        //     }
-        // }
-
         &-me {
             @extend .about__body-purpose;
             background-color: #f0ede8;
@@ -152,6 +125,10 @@
             @include tablet {
                 padding-top: 0;
                 padding-bottom: 4rem;
+            }
+
+            @include desktop{
+                padding-bottom: 11rem
             }
 
             &-title {

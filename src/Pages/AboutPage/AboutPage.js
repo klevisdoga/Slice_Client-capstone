@@ -32,9 +32,6 @@ export default function AboutPage() {
                         <div className='about__body-divider--slice'></div>
                     </div>
                 </div>
-                {/* <div className='about__body-divider'>
-                    <div className='about__body-divider--slice'></div>
-                </div> */}
                 <div className='about__body-me'>
                     <h1 className='about__body-me-title'>The developer</h1>
                     <p className='about__body-me-text'>

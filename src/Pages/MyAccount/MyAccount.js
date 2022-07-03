@@ -56,6 +56,8 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
     const currentDate = handleDates().currentDate; // creating a current date to compare next billing date and current  
     const nextWeek = handleDates().nextWeek; //creating a 'next week date'
 
+    console.log(currentDate)
+
     const handleUpcoming = () => {
       let upcomingSubs = []
 
@@ -119,7 +121,9 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
                 return (
                   <div key={uuid()} className='account__upcoming-listitem'>
                     <h3 className='account__upcoming-listitem-title'>{info.name}</h3>
-                    <span className='account__upcoming-listitem-date'>{info.nextDate}</span>
+                    {parseInt(info.nextDate.split('-').join('')) === handleDates().currentDate
+                    ? <span className='account__upcoming-listitem-date'>Today</span>
+                    : <span className='account__upcoming-listitem-date'>{info.nextDate}</span>}
                     <span className='account__upcoming-listitem-date'>{`$${info.amount} USD`}</span>
                   </div>
                 )

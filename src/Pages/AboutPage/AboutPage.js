@@ -37,10 +37,10 @@ export default function AboutPage() {
                     <p className='about__body-me-text'>
                         If you've made it this far.... I thank you for taking the time to learn a bit more about Slice and myself.
                         My name is Klevis Doga and this is my capstone project for the BrainStation Web Development Diploma Bootcamp
-                        (You can learn more about them <a target="_blank" rel="noreferrer" href='https://www.brainstation.io'>here</a>).
+                        (Learn more about BrainStation and their Bootcamp <a target="_blank" rel="noreferrer" href='https://www.brainstation.io'>here</a>).
                     </p>
                     <p className='about__body-me-text'>
-                        Technology grasped my interest from as early on as I can remember, my passion for technology has continued to accelerate at almost the same pace as the industry has.
+                        Technology grasped my interest from as early on as I can remember. As vast networks have developed and grown, so has my passion for learning about the industry.
                         I've always been fascinated by the complexities of how programs, applications, and websites function.
                         Technology is the very way you are able to read this right now almost anywhere in the world!
 

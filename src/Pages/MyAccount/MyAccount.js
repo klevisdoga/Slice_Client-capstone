@@ -22,10 +22,12 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
   const [upcoming, setUpcoming] = useState({ status: false, subscriptions: [] }) // object of all upcoming subscriptions
 
   const token = sessionStorage.getItem('token') // authentication token sent from server
+  const connection = sessionStorage.getItem('connection') // used to see if the user chose a manual direction of adding subscriptions
 
   // Functions for handling log out and the "Subscription Information"/"User Information" modal
   const signOut = () => {
     handleLoggedOut()
+    sessionStorage.removeItem('connection')
   }
   const openModal = (id) => {
     setModalOpen(true)
@@ -47,7 +49,8 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
   //Function for handling if the user chose to add subscriptions manually
   const handleManually = () => {
     setConnected(false)
-    setManually(true)
+    sessionStorage.setItem("connection", "manually")
+    window.location.reload(true)
   }
 
   // function to tell the browser what to do on inital render of the page
@@ -55,8 +58,6 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
 
     const currentDate = handleDates().currentDate; // creating a current date to compare next billing date and current  
     const nextWeek = handleDates().nextWeek; //creating a 'next week date'
-
-    console.log(currentDate)
 
     const handleUpcoming = () => {
       let upcomingSubs = []
@@ -73,8 +74,8 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
         setUpcoming({ status: true, subscriptions: upcomingSubs })
 
         // to ensure that if there are no upcoming subs, status remains false
-        if(upcomingSubs.length === 0){
-          setUpcoming({status: false, subscriptions: []})
+        if (upcomingSubs.length === 0) {
+          setUpcoming({ status: false, subscriptions: [] })
         }
       }
     }
@@ -91,9 +92,13 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
         res.data[0].connected === 'true' ? setConnected(true) : '',
       ])
 
+      if (connection === 'manually'){
+        setManually(true)
+      }
+
     handleUpcoming();
 
-  }, [token, userSubs.status, userSubs.subscriptions]);
+  }, [token, userSubs.status, userSubs.subscriptions, connection]);
 
 
   // when the user first signs up they will be taken to the  optionsPage  where they chose to connect to their bank or manually input their subscriptions
@@ -122,8 +127,8 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
                   <div key={uuid()} className='account__upcoming-listitem'>
                     <h3 className='account__upcoming-listitem-title'>{info.name}</h3>
                     {parseInt(info.nextDate.split('-').join('')) === handleDates().currentDate
-                    ? <span className='account__upcoming-listitem-date'>Today</span>
-                    : <span className='account__upcoming-listitem-date'>{info.nextDate}</span>}
+                      ? <span className='account__upcoming-listitem-date'>Today</span>
+                      : <span className='account__upcoming-listitem-date'>{info.nextDate}</span>}
                     <span className='account__upcoming-listitem-date'>{`$${info.amount} USD`}</span>
                   </div>
                 )
@@ -177,7 +182,11 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
                       <h3 className='account__settings-profile-info-title'>Account Balance</h3>
                       <h4 className='account__settings-profile-info-span'>$0.01 USD</h4>
                     </div>
-                  </> : <div className='account__settings-profile-info-container'><PlaidLinkButton /></div>}
+                  </>
+                  :
+                  <div className='account__settings-profile-info-container'>
+                    <PlaidLinkButton />
+                  </div>}
               </div>
             </div>
 

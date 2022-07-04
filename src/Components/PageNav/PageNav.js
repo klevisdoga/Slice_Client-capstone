@@ -28,15 +28,14 @@ export default function PageNav({ loggedIn }) {
       <img onClick={handleOpenMenu} src={burger} alt='burger menu icon' className='header__burger-nav' />
       <nav className={`header__nav ${menu ? "header__nav--open" : ""}`}>
         <span onClick={handleCloseMenu} className='header__nav-close'>X</span>
-        <NavLink onClick={handleCloseMenu} to={'/'} className='header__nav-home header__nav-item'>HOME</NavLink>
-        <NavLink onClick={handleCloseMenu} to={'/about'} className='header__nav-about header__nav-item'>ABOUT</NavLink>
-        <NavLink onClick={handleCloseMenu} to={'/'} className='header__nav-contact header__nav-item'>CONTACT</NavLink>
+        <NavLink onClick={handleCloseMenu} to={'/'} exact={true} className='header__nav-home header__nav-item' activeClassName='header__nav-item--active'>HOME</NavLink>
+        <NavLink onClick={handleCloseMenu} to={'/about'} className='header__nav-about header__nav-item' activeClassName='header__nav-item--active'>ABOUT</NavLink>
         {loggedIn ?
-          <NavLink onClick={handleCloseMenu} to={`/account/${id}`} className='header__nav-login header__nav-item'>ACCOUNT</NavLink>
+          <NavLink onClick={handleCloseMenu} to={`/account/${id}`} className='header__nav-login header__nav-item' activeClassName='header__nav-item--active'>ACCOUNT</NavLink>
           :
           <>
-            <NavLink onClick={handleCloseMenu} to={'/signup'} className='header__nav-signup header__nav-item'>SIGN UP</NavLink>
-            <NavLink onClick={handleCloseMenu} to={'/login'} className='header__nav-signup header__nav-item'>LOG IN</NavLink>
+            <NavLink onClick={handleCloseMenu} to={'/signup'} className='header__nav-signup header__nav-item' activeClassName='header__nav-item--active'>SIGN UP</NavLink>
+            <NavLink onClick={handleCloseMenu} to={'/login'} className='header__nav-signup header__nav-item' activeClassName='header__nav-item--active'>LOG IN</NavLink>
           </>
         }
       </nav>

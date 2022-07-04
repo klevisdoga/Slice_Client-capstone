@@ -9,6 +9,7 @@ import LoginPage from './Pages/LoginPage/LoginPage';
 import MyAccount from './Pages/MyAccount/MyAccount';
 import AboutPage from './Pages/AboutPage/AboutPage';
 
+
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [signedUp, setSignedUp] = useState(false)

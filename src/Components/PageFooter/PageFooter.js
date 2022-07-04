@@ -38,7 +38,7 @@ export default function PageFooter() {
                 </div>
                 <div className='footer__nav-info'>
                     <h4 className='footer__nav-info--title footer__nav-info--title-about'>ABOUT SLICE</h4>
-                    <NavLink to={'/'}>About Us</NavLink>
+                    <NavLink to={'/about'}>About Us</NavLink>
                     <NavLink to={'/'}>Careers</NavLink>
                 </div>
             </div>

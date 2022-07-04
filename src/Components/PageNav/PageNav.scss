@@ -68,6 +68,13 @@
             @include tablet{
                 display: none;
             }
+            &:hover{
+                cursor: pointer;
+            }
+        }
+
+        &-item--active{
+            border-bottom: 1px solid $primary-dark;
         }
 
         & a {
@@ -81,6 +88,9 @@
                 font-size: 1rem;
                 padding: 0;
                 margin-left: 1rem;
+            }
+            &:hover{
+                transform: scale(1.1);
             }
         }
 

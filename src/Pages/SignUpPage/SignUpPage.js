@@ -34,6 +34,7 @@ export default function SignUpPage(props) {
                     ev.target.reset()
                     sessionStorage.setItem('user_id', res.data.userId)
                     sessionStorage.setItem('token', res.data.token)
+                    Notification.requestPermission()
                 })
                 .catch(() => {
                     setError(true)

@@ -4,7 +4,7 @@ export const notfiyMe = (value) => {
 
     const showNotifcation = () => {
         let notification = new Notification("Slice App", {
-            body: `You have ${value} upcoming subscriptions this week!`
+            body: `You have ${value} upcoming ${value === 1 ? "subscription" : "subscriptions" } this week!`
         });
 
         notification.onClick = () => {

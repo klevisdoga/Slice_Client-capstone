@@ -7,6 +7,7 @@ import axios from 'axios'
 import PlaidLinkButton from '../../Components/PlaidLinkButton/PlaidLinkButton.tsx'
 import { v4 as uuid } from 'uuid'
 import { handleDates } from '../../DateFunctions/DateFunctions'
+import { notfiyMe } from '../../NotificationFuntion/NotificationFuntion'
 import UpdateInfoModal from '../../Components/UpdateInfoModal/UpdateInfoModal'
 
 export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
@@ -28,45 +29,12 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
   const signOut = () => {
     handleLoggedOut()
     sessionStorage.removeItem('connection')
+    sessionStorage.removeItem('notified')
   }
   const openModal = (id) => {
     setModalOpen(true)
     setSelectedSub(id)
   }
-//--------------------NOTIF TEST
-  const notfiyMe = () => {
-    const showNotifcation = () => {
-      let notification = new Notification("Slice App", {
-        body: 'You have new upcoming subscriptions'
-      });
-
-      notification.onClick = () => {
-        window.open('https://ks-slice.herokuapp.com/login')
-      }
-    }
-
-    if(!("Notification" in window)) {
-      alert("This browser does not support system notifcations")
-    }
-
-    else if (Notification.permission === "granted") {
-      showNotifcation()
-      console.log("granted")
-    } 
-    
-    else if (Notification.permission !== "denied") {
-      Notification.requestPermission().then(permission => {
-        console.log(permission)
-        if (permission === "granted") {
-          showNotifcation()
-        }
-      })
-    }
-
-  }
-
-//--------------------NOTIF TEST
-
   const openAddModal = () => {
     setAddNew(true)
   }

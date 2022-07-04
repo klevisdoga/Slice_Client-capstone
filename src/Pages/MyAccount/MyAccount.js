@@ -33,29 +33,42 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
     setModalOpen(true)
     setSelectedSub(id)
   }
+//--------------------NOTIF TEST
+  const notfiyMe = () => {
+    const showNotifcation = () => {
+      let notification = new Notification("Slice App", {
+        body: 'You have new upcoming subscriptions'
+      });
 
-  const showNotifcation = () => {
-    const notification = new Notification("Slice App", {
-      body: 'You have new upcoming subscriptions'
-    });
-  }
+      notification.onClick = () => {
+        window.open('https://ks-slice.herokuapp.com/login')
+      }
+    }
 
+    if(!("Notification" in window)) {
+      alert("This browser does not support system notifcations")
+    }
 
-
-
-  const openAddModal = () => {
-    setAddNew(true)
-
-    if (Notification.permission === "granted") {
+    else if (Notification.permission === "granted") {
       showNotifcation()
-    } else if (Notification.permission !== "denied") {
+      console.log("granted")
+    } 
+    
+    else if (Notification.permission !== "denied") {
       Notification.requestPermission().then(permission => {
+        console.log(permission)
         if (permission === "granted") {
           showNotifcation()
         }
       })
     }
 
+  }
+
+//--------------------NOTIF TEST
+
+  const openAddModal = () => {
+    setAddNew(true)
   }
   const openUpdateModal = () => {
     setUpdateInfo(true)
@@ -97,6 +110,9 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
         // to ensure that if there are no upcoming subs, status remains false
         if (upcomingSubs.length === 0) {
           setUpcoming({ status: false, subscriptions: [] })
+        }
+        else if (upcomingSubs.length !== 0){
+          notfiyMe()
         }
       }
     }

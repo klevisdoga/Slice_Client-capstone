@@ -22,6 +22,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
   const [selectedSub, setSelectedSub] = useState('') // the ID of the selected subscription
   const [upcoming, setUpcoming] = useState({ status: false, subscriptions: [] }) // object of all upcoming subscriptions
 
+
   const token = sessionStorage.getItem('token') // authentication token sent from server
   const connection = sessionStorage.getItem('connection') // used to see if the user chose a manual direction of adding subscriptions
 
@@ -80,7 +81,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
           setUpcoming({ status: false, subscriptions: [] })
         }
         else if (upcomingSubs.length !== 0){
-          notfiyMe()
+          notfiyMe(upcomingSubs.length)
         }
       }
     }

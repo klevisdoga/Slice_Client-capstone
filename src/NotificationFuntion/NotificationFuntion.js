@@ -1,10 +1,10 @@
-export const notfiyMe = () => {
+export const notfiyMe = (value) => {
 
     const notified = sessionStorage.getItem("notified")
 
     const showNotifcation = () => {
         let notification = new Notification("Slice App", {
-            body: 'You have new upcoming subscriptions'
+            body: `You have ${value} upcoming subscriptions this week!`
         });
 
         notification.onClick = () => {
@@ -12,11 +12,7 @@ export const notfiyMe = () => {
         }
     }
 
-    if (!("Notification" in window)) {
-        alert("This browser does not support system notifcations")
-    }
-
-    else if (Notification.permission === "granted" && notified !== "true") {
+    if (Notification.permission === "granted" && notified !== "true") {
         showNotifcation()
         sessionStorage.setItem("notified", "true")
     }

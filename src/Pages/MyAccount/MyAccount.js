@@ -33,8 +33,29 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
     setModalOpen(true)
     setSelectedSub(id)
   }
+
+  const showNotifcation = () => {
+    const notification = new Notification("Slice App", {
+      body: 'You have new upcoming subscriptions'
+    });
+  }
+
+
+
+
   const openAddModal = () => {
     setAddNew(true)
+
+    if (Notification.permission === "granted") {
+      showNotifcation()
+    } else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+          showNotifcation()
+        }
+      })
+    }
+
   }
   const openUpdateModal = () => {
     setUpdateInfo(true)
@@ -92,9 +113,9 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
         res.data[0].connected === 'true' ? setConnected(true) : '',
       ])
 
-      if (connection === 'manually'){
-        setManually(true)
-      }
+    if (connection === 'manually') {
+      setManually(true)
+    }
 
     handleUpcoming();
 

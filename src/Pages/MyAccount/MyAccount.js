@@ -183,7 +183,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
 
           {/* Total spending based on the users subcription amounts */}
           <div className='account__spending'>
-            <h1 className='account__spending-title'>Total Spending:</h1>
+            <h1 className='account__spending-title'>Total Amount:</h1>
             <div className='account__spending-container'>
               <div className='account__spending-month'>
                 <h2>This month:</h2>

@@ -1,0 +1,121 @@
+@use "../../Partials/mixins" as *;
+@use "../../Partials/variables" as *;
+
+.signup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1rem;
+    height: 75vh;
+
+    &__title {
+        text-align: left;
+        margin: 0;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid $primary-dark;
+
+        @include tablet {
+            line-height: 3rem;
+        }
+    }
+
+    &__main{
+        margin: auto;
+
+        @include tablet{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        padding: 1rem;
+        border-radius: 10px;
+
+        &-top {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            &-first {
+                width: 47.5%;
+            }
+
+            &-last {
+                @extend .signup__form-top-first;
+            }
+        }
+
+        &-bottom {
+
+            &-password {
+                width: 100%;
+            }
+
+            &-confirm {
+                @extend .signup__form-bottom-password;
+            }
+        }
+
+        & input {
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 0.5rem;
+            border-radius: 6px;
+            border: 1px solid $secondary-dark;
+
+            @include tablet{
+                height: 2.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        &-button {
+            text-decoration: none;
+            background-color: $primary-dark;
+            color: $primary-light;
+            padding: 0.25rem 1.5rem;
+            border-radius: 24px;
+            border: none;
+
+            @include tablet{
+                padding: .5rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            &:hover{
+                cursor: pointer;
+            }
+        }
+
+        &--dnm{
+            text-align: left;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 1rem;
+        }
+    }
+
+    &__redirect {
+
+        &-text{
+            @include tablet{
+                font-size: 1rem;
+            }
+        }
+
+        & a {
+            text-decoration: none;
+
+            @include tablet{
+                font-size: 1rem;
+            }
+        }
+    }
+}

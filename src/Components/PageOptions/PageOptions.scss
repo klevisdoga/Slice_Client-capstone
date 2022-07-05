@@ -1,0 +1,96 @@
+@use "../../Partials/mixins" as *;
+@use "../../Partials/variables" as *;
+
+.account {
+    &__connect {
+        margin: auto;
+        height: fit-content;
+        padding: 1rem;
+
+        @include tablet {
+            padding: 1rem 2rem;
+        }
+
+        &-title {
+            border-bottom: 1px solid $primary-dark;
+            padding-bottom: 1rem;
+            text-align: center;
+
+            @include tablet {
+                padding-bottom: 2rem;
+            }
+        }
+
+        &-started {
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            width: 20rem;
+
+            @include tablet {
+                width: 40rem;
+            }
+            @include desktop {
+                width: 50%;
+            }
+
+            &-container {
+                display: flex;
+                flex-direction: column;
+                margin: 3rem 1rem;
+
+                @include tablet {
+                    margin: 6rem 2rem;
+                }
+                @include desktop {
+                    flex-direction: row;
+                    margin: 10.5rem 2rem;
+                }
+            }
+
+            &--one {
+                border-bottom: 1px solid $primary-dark;
+                padding-bottom: 4rem;
+
+                @include tablet {
+                    padding-bottom: 8rem;
+                }
+                @include desktop {
+                    padding-top: 8rem;
+                    border-bottom: none;
+                    border-right: 1px solid $primary-dark;
+                }
+            }
+            &--two {
+                padding-top: 4rem;
+
+                @include tablet {
+                    padding-top: 8rem;
+                }
+            }
+
+            &-title {
+                text-align: center;
+
+                @include tablet {
+                    font-size: 1rem;
+                }
+            }
+
+            &-button {
+                background-color: $primary-dark;
+                color: $primary-light;
+                margin-top: 1rem;
+                border: none;
+                border-radius: 10px;
+                padding: 0.25rem 1rem;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

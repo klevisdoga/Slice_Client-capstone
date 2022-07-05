@@ -1,9 +1,44 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import './PageNav.scss'
+import burger from '../../Assets/Images/clipart3030668.png'
 
-export default function PageNav() {
+export default function PageNav({ loggedIn }) {
+
+  const [menu, setMenu] = useState(false);
+  const id = sessionStorage.getItem('user_id')
+
+  const handleOpenMenu = () => {
+    setMenu(true)
+  }
+
+  const handleCloseMenu = () => {
+    setMenu(false)
+    document.body.style.overflow = "scroll"
+  }
+  if (menu) {
+    document.body.style.overflow = "hidden"
+  }
+
+
+
   return (
-    <div>PageNav</div>
+    <header className='header'>
+      <Link to={'/'}><h1 className='header__logo'>SLICE</h1></Link>
+      <img onClick={handleOpenMenu} src={burger} alt='burger menu icon' className='header__burger-nav' />
+      <nav className={`header__nav ${menu ? "header__nav--open" : ""}`}>
+        <span onClick={handleCloseMenu} className='header__nav-close'>X</span>
+        <NavLink onClick={handleCloseMenu} to={'/'} exact={true} className='header__nav-home header__nav-item' activeClassName='header__nav-item--active'>HOME</NavLink>
+        <NavLink onClick={handleCloseMenu} to={'/about'} className='header__nav-about header__nav-item' activeClassName='header__nav-item--active'>ABOUT</NavLink>
+        {loggedIn ?
+          <NavLink onClick={handleCloseMenu} to={`/account/${id}`} className='header__nav-login header__nav-item' activeClassName='header__nav-item--active'>ACCOUNT</NavLink>
+          :
+          <>
+            <NavLink onClick={handleCloseMenu} to={'/signup'} className='header__nav-signup header__nav-item' activeClassName='header__nav-item--active'>SIGN UP</NavLink>
+            <NavLink onClick={handleCloseMenu} to={'/login'} className='header__nav-signup header__nav-item' activeClassName='header__nav-item--active'>LOG IN</NavLink>
+          </>
+        }
+      </nav>
+    </header>
   )
 }

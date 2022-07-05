@@ -11,3 +11,8 @@
         @content;
     }
 }
+@mixin laptop {
+    @media screen and (min-width: $laptop-breakpoint) {
+        @content;
+    }
+}

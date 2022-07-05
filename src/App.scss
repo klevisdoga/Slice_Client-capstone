@@ -1,9 +1,22 @@
-@use './Partials/fonts';
+@use "./Partials/fonts";
+@use './Partials/variables' as *;
+@use './Partials/mixins' as *;
 
-*, *::before, *::after{
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-html{
+html {
   margin: 0;
+}
+
+button {
+  &:hover {
+    cursor: pointer;
+  }
+  &:active{
+    transform: scale(.8);
+  }
 }

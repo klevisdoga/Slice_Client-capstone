@@ -8,10 +8,13 @@ export default function PlaidLinkButton() {
 
   // get link_token from your server when component mounts
   React.useEffect(() => {
-    axios.get(`${process.env.REACT_APP_LOCAL_SERVER}/access/create_link_token`)
-      .then(res => {
-        setToken(res.data)
-      })
+    setTimeout(() => {
+      axios.get(`${process.env.REACT_APP_LOCAL_SERVER}/access/create_link_token`)
+        .then(res => {
+          setToken(res.data)
+        })
+
+    }, 50)
   }, []);
 
   const onSuccess = useCallback<PlaidLinkOnSuccess>((publicToken, metadata) => {

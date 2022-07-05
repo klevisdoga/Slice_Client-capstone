@@ -54,12 +54,14 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
   let weekTotal = 0
 
 
+  // function that waits for data to be accesible, then 
   if (userData && userSubs.subscriptions && upcoming.subscriptions) {
     const data = JSON.parse(userData.subscriptions)
 
     const monthAmounts = data.map(item => {
       return parseFloat(item.amount)
     })
+
 
     const weekAmounts = upcoming.subscriptions.map(price => {
       return parseFloat(price.amount)

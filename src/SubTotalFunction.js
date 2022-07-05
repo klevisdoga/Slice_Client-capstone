@@ -4,7 +4,7 @@ export const addTotalMonth = (value) => {
     for(let i in value ) {
         total += value[i]
     }
-    return total
+    return total.toFixed(2)
 }
 
 export const addTotalWeek = (value) => {
@@ -13,5 +13,5 @@ export const addTotalWeek = (value) => {
     for(let i in value ) {
         total += value[i]
     }
-    return total
+    return total.toFixed(2)
 }

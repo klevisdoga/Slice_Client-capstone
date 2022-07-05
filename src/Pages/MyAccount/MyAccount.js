@@ -7,6 +7,7 @@ import axios from 'axios'
 import PlaidLinkButton from '../../Components/PlaidLinkButton/PlaidLinkButton.tsx'
 import { v4 as uuid } from 'uuid'
 import { handleDates } from '../../DateFunctions/DateFunctions'
+import { addTotalMonth, addTotalWeek } from '../../SubTotalFunction';
 import { notfiyMe } from '../../NotificationFuntion/NotificationFuntion'
 import UpdateInfoModal from '../../Components/UpdateInfoModal/UpdateInfoModal'
 
@@ -49,6 +50,25 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
     window.location.reload(true)
   }
 
+  let monthTotal = 0
+  let weekTotal = 0
+
+
+  if (userData && userSubs.subscriptions && upcoming.subscriptions) {
+    const data = JSON.parse(userData.subscriptions)
+
+    const monthAmounts = data.map(item => {
+      return parseFloat(item.amount)
+    })
+
+    const weekAmounts = upcoming.subscriptions.map(price => {
+      return parseFloat(price.amount)
+    })
+
+    monthTotal = addTotalMonth(monthAmounts)
+    weekTotal = addTotalWeek(weekAmounts)
+  };
+
   //Function for handling if the user chose to add subscriptions manually
   const handleManually = () => {
     setConnected(false)
@@ -80,7 +100,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
         if (upcomingSubs.length === 0) {
           setUpcoming({ status: false, subscriptions: [] })
         }
-        else if (upcomingSubs.length !== 0){
+        else if (upcomingSubs.length !== 0) {
           notfiyMe(upcomingSubs.length)
         }
       }
@@ -155,6 +175,21 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
               }) : ''}
               <div className='account__all-listitem'>
                 <button onClick={openAddModal} className='account__all-listitem--add'>Add</button>
+              </div>
+            </div>
+          </div>
+
+          {/* Total spending based on the users subcription amounts */}
+          <div className='account__spending'>
+            <h1 className='account__spending-title'>Total Spending:</h1>
+            <div className='account__spending-container'>
+              <div className='account__spending-month'>
+                <h2>This month:</h2>
+                <h2>{`$${monthTotal}`}</h2>
+              </div>
+              <div className='account__spending-week'>
+                <h2>This week:</h2>
+                <h2>{`$${weekTotal}`}</h2>
               </div>
             </div>
           </div>

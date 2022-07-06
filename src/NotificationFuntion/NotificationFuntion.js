@@ -4,7 +4,7 @@ export const notfiyMe = (value) => {
 
     const showNotifcation = () => {
         let notification = new Notification("Slice App", {
-            body: `You have ${value} upcoming ${value === 1 ? "subscription" : "subscriptions" } this week!`
+            body: `You have ${value} upcoming ${value === 1 ? "subscription" : "subscriptions"} this week!`
         });
 
         notification.onClick = () => {
@@ -12,8 +12,8 @@ export const notfiyMe = (value) => {
         }
     }
 
-    if(!(Notification in window)) {
-        alert("This browser does not support Push Notifcations")
+    if (!("Notification" in window)) {
+        alert("This browser does not support desktop notification");
     }
 
     else if (Notification.permission === "granted" && notified !== "true") {

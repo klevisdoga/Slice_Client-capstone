@@ -16,7 +16,7 @@ export const notfiyMe = (value) => {
         alert("This browser does not support Push Notifcations")
     }
 
-    if (Notification.permission === "granted" && notified !== "true") {
+    else if (Notification.permission === "granted" && notified !== "true") {
         showNotifcation()
         sessionStorage.setItem("notified", "true")
     }

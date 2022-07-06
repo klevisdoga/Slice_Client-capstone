@@ -125,6 +125,7 @@ export default function MyAccount({ loggedIn, handleLoggedOut, signedUp }) {
     }
 
     handleUpcoming();
+    
 
   }, [token, userSubs.status, userSubs.subscriptions, connection]);
 

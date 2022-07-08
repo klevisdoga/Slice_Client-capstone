@@ -9,20 +9,23 @@ const PlaidLinkButton = () => {
 
   // generate a link_token when component mounts
   React.useEffect(() => {
+
     if (isOAuthRedirect) {
       setToken(localStorage.getItem('link_token'));
       return;
     }
+
     const createLinkToken = async () => {
       setTimeout(() => {
-        axios.get(`${process.env.REACT_APP_LOCAL_SERVER}/access/create_link_token`)
+        axios.post(`${process.env.REACT_APP_LOCAL_SERVER}/access/create_link_token`, {
+          user_id: id
+        })
           .then(res => {
             setToken(res.data)
             localStorage.setItem('link_token', res.data);
           })
       }, 100)
 
-      // store link_token temporarily in case of OAuth redirect
     }
     createLinkToken();
   }, []);
@@ -44,18 +47,15 @@ const PlaidLinkButton = () => {
             window.location.reload()
           })
       })
+      .catch(err => {
+        console.log(err)
+      }) 
   }, []);
 
   const onEvent = useCallback<PlaidLinkOnEvent>((eventName, metadata) => {
-
-    // log onEvent callbacks from Link
-    console.log(eventName, metadata);
   }, []);
 
   const onExit = useCallback<PlaidLinkOnExit>((error, metadata) => {
-
-    // log onExit callbacks from Link, handle errors
-    console.log(error, metadata);
   }, []);
 
   const config: PlaidLinkOptions = {
